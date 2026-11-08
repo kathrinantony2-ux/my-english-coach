@@ -1,31 +1,403 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#244a3b"><title>My English Coach</title>
+
+
+<!doctype html>
+
+<html lang="de">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#171513">
+
+<title>KEEPGOOING — Your English Journey</title>
+
 <style>
-:root{--g:#244a3b;--m:#e7f0e9;--ink:#17231d;--mut:#637168;--line:#dce5dd}*{box-sizing:border-box}body{margin:0;background:#fbfcfa;color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,sans-serif}header{background:var(--g);color:white;padding:22px 18px;border-radius:0 0 24px 24px}.wrap{max-width:760px;margin:auto;padding:0 16px 32px}.top,.row{display:flex;align-items:center;gap:12px}.logo{background:#ffffff20;border-radius:14px;padding:12px;font-size:25px}h1{font-size:23px;margin:0}h2{font-size:20px;margin:0 0 10px}.muted{color:var(--mut);font-size:14px}.grow{flex:1}.ring{width:72px;height:72px;position:relative}.ring svg{transform:rotate(-90deg)}.ring span{position:absolute;inset:0;display:grid;place-items:center;font-weight:bold;font-size:13px}nav{display:flex;gap:7px;overflow:auto;padding:14px 0 6px;position:sticky;top:0;background:#fbfcfa;z-index:2}nav button{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:99px;padding:9px 12px}nav button.active,.primary{background:var(--g);color:white;border-color:var(--g)}.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;margin:12px 0}.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font:inherit}.full{width:100%}.hide{display:none}.tag{display:inline-block;background:var(--m);color:var(--g);border-radius:99px;padding:4px 9px;font-size:12px;font-weight:bold}.notice{background:var(--m);padding:12px;border-radius:12px;font-size:14px}.word{display:grid;grid-template-columns:32px 1fr;gap:8px;padding:12px 0;border-bottom:1px solid #edf1ed}.num{color:var(--mut);font-size:13px}.en{font-weight:700}.de{color:#405148}.example{font-size:14px;margin-top:3px;color:#315c45}label{display:block;font-size:14px;font-weight:650;margin:12px 0 5px}select,input{width:100%;border:1px solid var(--line);padding:12px;border-radius:11px;background:white;font:inherit}.option{display:block;width:100%;text-align:left;background:white;border:1px solid var(--line);padding:12px;border-radius:12px;margin:8px 0;cursor:pointer}.option.correct{background:#e6f5ec;border-color:#31835c}.option.wrong{background:#fff0f0;border-color:#bd4b4b}blockquote{margin:0;padding:14px;background:#f6f8f5;border-left:3px solid var(--g);border-radius:0 10px 10px 0}footer{text-align:center;color:var(--mut);font-size:12px;padding:20px 0}@media(min-width:620px){.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
-</style></head><body><header><div class="wrap"><div class="top"><div class="logo">📘</div><div><h1>My English Coach</h1><div style="color:#e0ebe3;font-size:14px">Dein persönlicher Englischtrainer · erste Testversion</div></div></div><div class="row" style="margin-top:18px"><div class="grow"><b>Dein Tagesziel</b><div style="font-size:14px;color:#e0ebe3">50 richtige Antworten</div></div><div class="ring"><svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="30" fill="none" stroke="#ffffff35" stroke-width="7"/><circle id="ring" cx="36" cy="36" r="30" fill="none" stroke="#e5b85c" stroke-linecap="round" stroke-width="7" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span id="ringText" style="color:white">0/50</span></div></div></div></header><main class="wrap">
-<nav><button class="active" data-tab="home">Heute</button><button data-tab="words">50 Wörter</button><button data-tab="reading">Lesetext</button><button data-tab="quiz">Übungen</button><button data-tab="settings">Einstellungen</button></nav>
-<section id="home" class="tab"><div class="panel"><span class="tag">LEKTION 1 · B1</span><h2 style="margin-top:9px">Travel & holidays</h2><p>50 anspruchsvollere Reise-Wendungen, ein längerer Text und Übungen. Später können wir weitere Themen und Funktionen ergänzen.</p><div class="cols"><div class="notice"><b>Wortschatz:</b> Übersetzung und natürlicher Beispielsatz.</div><div class="notice"><b>Fortschritt:</b> Richtige Antworten füllen den Tageskreis. Fehler kannst du erneut versuchen.</div></div><p class="muted">Der Lernstand wird auf diesem Gerät gespeichert und am nächsten Kalendertag zurückgesetzt.</p><button class="primary full" onclick="showTab('quiz')">Mit Übungen starten →</button></div><div class="panel"><h2>Heutiger Fokus</h2><p>Reiseprobleme lösen: <i>miss a connection</i>, <i>request a refund</i>, <i>sort something out</i>.</p></div></section>
-<section id="words" class="tab hide"><div class="panel"><h2>50 Wörter & Wendungen</h2><p class="muted">Englisch, deutsche Bedeutung und Beispielsatz.</p><div id="wordList"></div></div></section>
-<section id="reading" class="tab hide"><div class="panel"><h2>A Travel Day That Didn't Go to Plan</h2><p class="muted">Der Text verwendet alle 50 Lernwörter und Wendungen.</p><blockquote id="story"></blockquote><button class="secondary full" style="margin-top:12px" onclick="document.getElementById('translation').classList.toggle('hide')">Deutsche Übersetzung ein-/ausblenden</button><p id="translation" class="hide"></p></div></section>
-<section id="quiz" class="tab hide"><div class="panel"><div class="row"><div class="grow"><h2>Wortschatz-Check</h2><p id="quizCount" class="muted">Frage 1 von 50</p></div><span class="tag" id="scoreTag">0 richtig</span></div><div id="question" style="font-size:18px;font-weight:bold;margin:18px 0 10px"></div><div id="options"></div><div id="feedback" class="notice hide" style="margin-top:12px"></div><div class="row" style="margin-top:14px"><button class="secondary grow" id="retryBtn" onclick="retryQuestion()" disabled>Nochmal versuchen</button><button class="primary grow" id="nextBtn" onclick="nextQuestion()" disabled>Weiter →</button></div><p class="muted">Jede Frage zählt höchstens einmal als richtig. Falsche Antworten kannst du erneut versuchen.</p></div></section>
-<section id="settings" class="tab hide"><div class="panel"><h2>Lern-Einstellungen</h2><label for="topic">Thema für eine nächste Lektion</label><select id="topic"><option>Reisen und Urlaub</option><option>Alltag und Gespräche</option><option>Arbeit und Beruf</option><option>Gesundheit und Ernährung</option><option>Geschichte und Kultur</option><option>Technologie und Wissenschaft</option><option>Aktuelle Nachrichten</option><option>Eigenes Thema</option></select><label for="custom">Eigenes Thema</label><input id="custom" placeholder="z. B. Musik, Garten, Politik"><label for="level">Schwierigkeitsgrad</label><select id="level"><option>A2 – Grundlagen festigen</option><option selected>B1 – selbstständig kommunizieren</option><option>B2 – anspruchsvollere Sprache</option></select><div class="notice" style="margin-top:14px">Thema und Niveau lassen sich speichern. Diese Testversion enthält zunächst die feste Beispiellektion Reisen & Urlaub. Automatisch neue Lektionen zu beliebigen Themen brauchen später eine Online-KI-Verbindung.</div><button class="primary full" style="margin-top:14px" onclick="saveSettings()">Einstellungen speichern</button><p id="saved" class="muted"></p></div></section><footer>Erste Testversion · Änderungen sind später möglich.</footer></main>
+
+:root{--bg:#171513;--panel:#24211e;--text:#f3eee7;--muted:#b8ada1;--gold:#c9a878;--line:#484038;--good:#9bb69a}
+
+*{box-sizing:border-box}
+
+body{margin:0;background:radial-gradient(circle at 50% 0,#393027 0,#171513 48%);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+
+header{text-align:center;padding:24px 18px 12px}
+
+h1{margin:0;font-size:32px;letter-spacing:2px}
+
+header p{color:var(--muted);font-size:13px;letter-spacing:1px}
+
+main{max-width:760px;margin:auto;padding:10px 15px 100px}
+
+.hero{display:flex;align-items:center;gap:18px;background:linear-gradient(145deg,#302a24,#211e1b);border:1px solid var(--line);border-radius:22px;padding:18px;margin:10px 0}
+
+.progress{width:112px;height:112px;flex:none;position:relative}
+
+.progress svg{transform:rotate(-90deg)}
+
+.track{stroke:#51483e;stroke-width:8;fill:none}
+
+.arc{stroke:var(--gold);stroke-width:8;fill:none;stroke-linecap:round;transition:stroke-dashoffset .4s}
+
+.progress .inside{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+
+.inside b{font-size:25px}
+
+.inside small{font-size:10px;color:var(--muted)}
+
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:16px 0}
+
+nav button{padding:10px 3px;border:1px solid var(--line);border-radius:12px;background:#211e1b;color:var(--muted);font-size:12px}
+
+nav button.active{background:var(--gold);color:#211b14;font-weight:700}
+
+.panel{display:none;background:rgba(36,33,30,.96);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}
+
+.panel.active{display:block}
+
+h2{font-size:21px;margin:0 0 12px}
+
+h3{font-size:16px;margin:16px 0 7px;color:var(--gold)}
+
+.muted{color:var(--muted);font-size:13px}
+
+.item{padding:12px 0;border-bottom:1px solid var(--line)}
+
+.word{font-weight:700;font-size:17px}
+
+.translation{color:var(--muted);margin-left:7px}
+
+.example{font-size:14px;color:#e0d7cc;margin-top:4px}
+
+button{cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:#211b14;border-radius:12px;padding:11px 14px;font-weight:650;font-size:14px}
+
+button.secondary{background:transparent;color:var(--gold)}
+
+input,textarea,select{width:100%;background:#171513;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;margin:5px 0 10px}
+
+textarea{min-height:100px}
+
+.row{display:flex;gap:8px}
+
+.row>*{flex:1;min-width:0}
+
+.card{background:#1b1917;border:1px solid var(--line);border-radius:13px;padding:13px;margin:10px 0}
+
+.feedback{min-height:24px;color:var(--good);font-size:14px}
+
+.mandala{width:74px;height:74px;margin:12px auto;display:block}
+
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<svg class="mandala" viewBox="0 0 100 100" aria-label="Mandala">
+
+<g fill="none" stroke="#c9a878" stroke-width="1.1">
+
+<circle cx="50" cy="50" r="8"/><circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="29"/><circle cx="50" cy="50" r="40"/>
+
+<g id="petal"><path d="M50 10 C38 25 38 35 50 50 C62 35 62 25 50 10Z"/></g>
+
+<use href="#petal" transform="rotate(30 50 50)"/><use href="#petal" transform="rotate(60 50 50)"/><use href="#petal" transform="rotate(90 50 50)"/><use href="#petal" transform="rotate(120 50 50)"/><use href="#petal" transform="rotate(150 50 50)"/><use href="#petal" transform="rotate(180 50 50)"/><use href="#petal" transform="rotate(210 50 50)"/><use href="#petal" transform="rotate(240 50 50)"/><use href="#petal" transform="rotate(270 50 50)"/><use href="#petal" transform="rotate(300 50 50)"/><use href="#petal" transform="rotate(330 50 50)"/>
+
+<path d="M50 3V97M3 50H97M17 17L83 83M83 17L17 83"/>
+
+</g>
+
+</svg>
+
+<h1>KEEPGOOING</h1>
+
+<p>LEARN · GROW · KEEP GOING</p>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="progress">
+
+<svg width="112" height="112" viewBox="0 0 112 112">
+
+<circle class="track" cx="56" cy="56" r="47"/>
+
+<circle id="arc" class="arc" cx="56" cy="56" r="47" stroke-dasharray="295.3" stroke-dashoffset="295.3"/>
+
+</svg>
+
+<div class="inside"><b id="pct">0%</b><small>TODAY</small></div>
+
+</div>
+
+<div><h2>Your daily progress</h2><p id="progressText">Start with one small step today.</p><p class="muted">10 words · 10 sentences · daily practice</p></div>
+
+</section>
+
+<nav>
+
+<button class="active" data-tab="today">Today</button>
+
+<button data-tab="words">Words</button>
+
+<button data-tab="reading">Reading</button>
+
+<button data-tab="speak">Speaking</button>
+
+</nav>
+
+<section class="panel active" id="today">
+
+<h2>Today's lesson</h2>
+
+<p class="muted">Your daily learning starts here.</p>
+
+<h3>10 useful words</h3><div id="dailyWords"></div>
+
+<h3>10 everyday sentences</h3><div id="dailySentences"></div>
+
+<button id="completeToday">Mark today's lesson as done</button>
+
+</section>
+
+<section class="panel" id="words">
+
+<h2>My vocabulary</h2>
+
+<p class="muted">Add your own words. They stay saved in this browser on this device.</p>
+
+<div class="row"><input id="newWord" placeholder="English word"><input id="newMeaning" placeholder="German meaning"></div>
+
+<input id="newExample" placeholder="Short everyday example (optional)">
+
+<button id="addWord">Save word</button>
+
+<div id="savedWords"></div>
+
+<h3>Random review</h3>
+
+<div class="card"><b id="quizWord">Tap to start a quiz</b><p id="quizMeaning" class="muted"></p><button class="secondary" id="quizNext">Show a random word</button></div>
+
+</section>
+
+<section class="panel" id="reading">
+
+<h2>Reading & translation</h2>
+
+<p class="muted">Read the English text, then write your German translation.</p>
+
+<div class="card"><b>A small step every day</b>
+
+<p>To make progress, I practise gently and thoroughly every day. I choose fresh ingredients for dinner and use a kitchen appliance to prepare them. I try to maintain a healthy routine. The room is slightly cold, so I close the window. I will go for a walk unless it rains. I have already finished my homework; instead of watching television, I read a short story. Reading improves my comprehension.</p>
+
+</div>
+
+<textarea id="translation" placeholder="Write your German translation here..."></textarea>
+
+<button id="saveTranslation">Save my translation on this device</button>
+
+<p id="translationStatus" class="feedback"></p>
+
+<h3>Video subtitle practice</h3>
+
+<select id="subtitleMode">
+
+<option>German audio / English subtitles</option>
+
+<option>English audio / German subtitles</option>
+
+</select>
+
+<p class="muted">This is a practice preference. Video playback and subtitle sources are not connected yet.</p>
+
+</section>
+
+<section class="panel" id="speak">
+
+<h2>Speaking practice</h2>
+
+<p class="muted">Read the sentence aloud. If your browser supports speech recognition, the app will show what it understood. This is not a full AI pronunciation assessment.</p>
+
+<div class="card"><b id="speakSentence">I practise English a little every day.</b></div>
+
+<div class="row"><button id="listen">Listen</button><button class="secondary" id="record">Speak</button></div>
+
+<p id="speechResult" class="feedback">Your recognised words will appear here.</p>
+
+<p class="muted">If speech recognition is unavailable, practise by reading aloud.</p>
+
+</section>
+
+<footer>KEEPGOOING · Your English journey, one step at a time.</footer>
+
+</main>
+
 <script>
+
 const words=[
-["miss a connection","den Anschluss verpassen","We missed our connection because the first train was delayed."],["request a refund","eine Rückerstattung beantragen","I’d like to request a refund for the cancelled flight."],["fully booked","ausgebucht","I’m afraid the hotel is fully booked tonight."],["unexpected delay","unerwartete Verspätung","An unexpected delay ruined our plans."],["sort something out","etwas klären/regeln","Don’t worry; we’ll sort it out at the desk."],["itinerary","Reiseplan","Our itinerary includes three cities in ten days."],["accommodation","Unterkunft","We found affordable accommodation near the station."],["overbooked","überbucht","The flight was overbooked, so some passengers couldn’t board."],["departure lounge","Abflughalle","We waited in the departure lounge for an hour."],["carry-on luggage","Handgepäck","You can keep your medicine in your carry-on luggage."],["check in","einchecken","You can check in online the day before your flight."],["board a flight","an Bord eines Flugzeugs gehen","Passengers can board the flight at gate twelve."],["take off","abheben","The plane took off despite the strong wind."],["land","landen","We should land in Madrid at six."],["connecting flight","Anschlussflug","Our connecting flight leaves in forty minutes."],["travel insurance","Reiseversicherung","Travel insurance may cover certain medical costs."],["peak season","Hauptreisezeit","Prices are much higher during peak season."],["off the beaten track","abseits der Touristenwege","We found a quiet village off the beaten track."],["tourist trap","Touristenfalle","That restaurant near the monument is a tourist trap."],["local customs","örtliche Bräuche","It’s respectful to learn about local customs."],["exchange rate","Wechselkurs","Check the exchange rate before changing money."],["hidden fee","versteckte Gebühr","The cheap ticket came with a hidden fee."],["make a complaint","sich beschweren","I had to make a complaint about the noisy room."],["travel light","mit wenig Gepäck reisen","I prefer to travel light on short trips."],["get around","sich fortbewegen","It’s easy to get around the city by tram."],["public transport","öffentliche Verkehrsmittel","Public transport is reliable here."],["rush hour","Berufsverkehr","Avoid travelling during rush hour."],["one-way ticket","einfache Fahrkarte","I bought a one-way ticket to Bristol."],["return ticket","Hin- und Rückfahrkarte","A return ticket is cheaper than two singles."],["miss the deadline","eine Frist verpassen","We almost missed the deadline to confirm the booking."],["travel arrangements","Reisevorbereitungen","I’ll email you the travel arrangements tonight."],["be entitled to","Anspruch haben auf","You may be entitled to compensation."],["compensation","Entschädigung","The airline offered compensation for the long delay."],["alternative route","alternative Route","We took an alternative route to avoid traffic."],["roadworks","Straßenarbeiten","Roadworks added an hour to our journey."],["scenic route","landschaftlich schöne Route","We chose the scenic route along the coast."],["breathtaking view","atemberaubende Aussicht","There was a breathtaking view from the hill."],["travel companion","Reisebegleiter/in","My travel companion speaks several languages."],["get stranded","stranden/festsitzen","We got stranded at the station overnight."],["emergency contact","Notfallkontakt","Keep your emergency contact details with you."],["valuable belongings","Wertsachen","Keep your valuable belongings in a safe place."],["be worth it","sich lohnen","The long walk was worth it."],["make the most of","das Beste aus etwas machen","We made the most of our last day."],["run out of","etwas nicht mehr haben","We ran out of cash in the small village."],["look forward to","sich freuen auf","I’m looking forward to exploring the old town."],["get used to","sich gewöhnen an","It took me a day to get used to the time difference."],["keep an eye on","im Auge behalten","Keep an eye on your bags in crowded places."],["get a local SIM card","eine lokale SIM-Karte besorgen","I got a local SIM card to save on data costs."],["speak up","lauter sprechen","Could you speak up? I can’t hear you clearly."],["have something in common","etwas gemeinsam haben","We discovered that we had a lot in common."]
+
+["gently","sanft","Please close the door gently."],
+
+["ingredients","Zutaten","We need a few fresh ingredients."],
+
+["maintain","aufrechterhalten / pflegen","I try to maintain a healthy routine."],
+
+["unless","wenn nicht / außer","I will walk unless it rains."],
+
+["thoroughly","gründlich","Please wash your hands thoroughly."],
+
+["appliance","Haushaltsgerät","This kitchen appliance is easy to use."],
+
+["slightly","leicht / geringfügig","The soup is slightly too hot."],
+
+["comprehension","Verständnis","Reading helps my comprehension."],
+
+["already","schon / bereits","I have already finished my work."],
+
+["instead","stattdessen","Let's stay home instead."]
+
 ];
-const story=`Our trip nearly went wrong before it even began. We had carefully planned our itinerary and booked our accommodation months ahead, but during peak season the hotel became fully booked and another nearby place was overbooked. We had to sort something out quickly. I prefer to travel light, so my carry-on luggage was easy to manage while we checked in and waited in the departure lounge. An unexpected delay meant we might miss a connection, and the airline eventually offered an alternative route. We asked whether we were entitled to compensation and how to request a refund for the unused part of our ticket. Fortunately, our travel insurance covered some extra costs. We kept an eye on our valuable belongings and saved the emergency contact details on our phones. After we boarded the flight, it took off late but landed safely. Our connecting flight was gone, so we had to make new travel arrangements and buy a one-way ticket for the next morning instead of our original return ticket. We nearly missed the deadline to confirm the new booking, and a hidden fee made us make a complaint. At last we reached the city and learned how to get around using public transport, though roadworks and rush hour slowed us down. A local helped us find a scenic route with a breathtaking view. We explored places off the beaten track, learned about local customs, checked the exchange rate, and avoided every tourist trap we could. I got a local SIM card, although I had to speak up at the shop because it was noisy. My travel companion and I had a lot in common, and we were looking forward to the next day. We ran out of cash once, and for a while we got stranded in a village, but the extra adventure was worth it. We got used to the new plans, made the most of our time, and promised to travel together again.`;
-const storyDe=`Unsere Reise wäre beinahe schiefgegangen, bevor sie überhaupt richtig begonnen hatte. Wir hatten unseren Reiseplan sorgfältig vorbereitet und unsere Unterkunft Monate im Voraus gebucht. Doch in der Hauptreisezeit war das Hotel ausgebucht und eine andere Unterkunft in der Nähe überbucht. Wir mussten schnell eine Lösung finden. Ich reise lieber mit wenig Gepäck, deshalb war mein Handgepäck leicht zu handhaben, während wir eincheckten und in der Abflughalle warteten. Eine unerwartete Verspätung bedeutete, dass wir unseren Anschluss verpassen könnten, und die Fluggesellschaft bot schließlich eine alternative Route an. Wir fragten, ob wir Anspruch auf eine Entschädigung hätten und wie wir für den ungenutzten Teil unseres Tickets eine Rückerstattung beantragen könnten. Zum Glück übernahm unsere Reiseversicherung einige zusätzliche Kosten. Wir behielten unsere Wertsachen im Auge und speicherten die Notfallkontaktdaten auf unseren Handys. Nachdem wir an Bord gegangen waren, hob das Flugzeug verspätet ab, landete aber sicher. Unser Anschlussflug war weg, also mussten wir neue Reisevorbereitungen treffen und für den nächsten Morgen eine einfache Fahrkarte kaufen, statt unserer ursprünglichen Rückfahrkarte. Beinahe verpassten wir die Frist zur Bestätigung der neuen Buchung, und eine versteckte Gebühr veranlasste uns zu einer Beschwerde. Schließlich erreichten wir die Stadt und lernten, uns mit öffentlichen Verkehrsmitteln fortzubewegen, obwohl Straßenarbeiten und Berufsverkehr uns aufhielten. Eine einheimische Person zeigte uns eine landschaftlich schöne Route mit atemberaubender Aussicht. Wir erkundeten Orte abseits der üblichen Touristenwege, lernten örtliche Bräuche kennen, prüften den Wechselkurs und vermieden möglichst jede Touristenfalle. Ich besorgte mir eine lokale SIM-Karte, musste im Laden aber lauter sprechen, weil es laut war. Mein Reisebegleiter und ich hatten vieles gemeinsam und freuten uns auf den nächsten Tag. Einmal ging uns das Bargeld aus, und eine Weile saßen wir in einem Dorf fest, doch das zusätzliche Abenteuer hatte sich gelohnt. Wir gewöhnten uns an die neuen Pläne, machten das Beste aus unserer Zeit und versprachen, wieder zusammen zu reisen.`;
-let current=0,solved=new Set();
-function dateKey(){let d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-function updateRing(){let n=solved.size,c=2*Math.PI*30;document.getElementById('ring').style.strokeDashoffset=c*(1-Math.min(n/50,1));document.getElementById('ringText').textContent=n+'/50';document.getElementById('scoreTag').textContent=n+' richtig'}
-function loadProgress(){if(localStorage.getItem('mec-date')!==dateKey()){localStorage.setItem('mec-date',dateKey());localStorage.setItem('mec-solved','[]')}try{solved=new Set(JSON.parse(localStorage.getItem('mec-solved')||'[]'))}catch(e){solved=new Set()}updateRing()}
-function saveProgress(){localStorage.setItem('mec-date',dateKey());localStorage.setItem('mec-solved',JSON.stringify([...solved]));updateRing()}
-function showTab(id){document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('hide',e.id!==id));document.querySelectorAll('nav button').forEach(e=>e.classList.toggle('active',e.dataset.tab===id));if(id==='quiz')renderQuestion();window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
-function renderWords(){document.getElementById('wordList').innerHTML=words.map((w,i)=>`<div class="word"><div class="num">${i+1}.</div><div><div class="en">${w[0]}</div><div class="de">${w[1]}</div><div class="example">${w[2]}</div></div></div>`).join('')}
-function renderQuestion(){if(current>=50){document.getElementById('quizCount').textContent='Runde beendet';document.getElementById('question').textContent='Gut gemacht! Du bist durch die 50 Fragen.';document.getElementById('options').innerHTML='';document.getElementById('feedback').classList.remove('hide');document.getElementById('feedback').textContent='Dein Tageskreis zeigt '+solved.size+' von 50 richtig beantworteten Fragen.';document.getElementById('nextBtn').textContent='Von vorn';document.getElementById('nextBtn').disabled=false;return}document.getElementById('quizCount').textContent='Frage '+(current+1)+' von 50';document.getElementById('question').textContent='Was bedeutet „'+words[current][0]+'“?';let opts=[words[current][1]];while(opts.length<4){let x=words[Math.floor(Math.random()*50)][1];if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);document.getElementById('options').innerHTML=opts.map(o=>`<button class="option">${o}</button>`).join('');document.querySelectorAll('.option').forEach(b=>b.onclick=()=>answer(b,b.textContent,words[current][1]));document.getElementById('feedback').classList.add('hide');document.getElementById('nextBtn').disabled=true;document.getElementById('nextBtn').textContent='Weiter →';document.getElementById('retryBtn').disabled=true}
-function answer(btn,val,correct){if(val===correct){btn.classList.add('correct');document.querySelectorAll('.option').forEach(b=>b.disabled=true);solved.add(current);saveProgress();document.getElementById('feedback').textContent='Richtig! '+words[current][2];document.getElementById('feedback').classList.remove('hide');document.getElementById('nextBtn').disabled=false;document.getElementById('retryBtn').disabled=true}else{btn.classList.add('wrong');document.getElementById('feedback').textContent='Noch nicht ganz. Versuch es noch einmal.';document.getElementById('feedback').classList.remove('hide');document.getElementById('retryBtn').disabled=false}}
-function retryQuestion(){document.querySelectorAll('.option').forEach(b=>{b.classList.remove('wrong');b.disabled=false});document.getElementById('feedback').classList.add('hide');document.getElementById('retryBtn').disabled=true}
-function nextQuestion(){if(current>=50)current=0;else current++;renderQuestion()}
-function saveSettings(){let t=document.getElementById('topic').value,c=document.getElementById('custom').value,l=document.getElementById('level').value;localStorage.setItem('mec-topic',t);localStorage.setItem('mec-custom',c);localStorage.setItem('mec-level',l);document.getElementById('saved').textContent='Gespeichert. Thema: '+(t==='Eigenes Thema'&&c?c:t)+' · Niveau: '+l+'. Die Beispiellektion bleibt vorerst Reisen & Urlaub.'}
-function init(){loadProgress();renderWords();document.getElementById('story').textContent=story;document.getElementById('translation').textContent=storyDe;let t=localStorage.getItem('mec-topic');if(t)document.getElementById('topic').value=t;document.getElementById('custom').value=localStorage.getItem('mec-custom')||'';let l=localStorage.getItem('mec-level');if(l)document.getElementById('level').value=l}init();
-</script></body></html>
+
+const sentences=[
+
+"Could you help me, please?",
+
+"I am looking forward to the weekend.",
+
+"That sounds like a good idea.",
+
+"I would rather have some tea.",
+
+"I have not decided yet.",
+
+"Could you explain that again?",
+
+"It depends on the weather.",
+
+"I am trying to improve my English.",
+
+"We should leave a little earlier.",
+
+"I completely understand what you mean."
+
+];
+
+const $=id=>document.getElementById(id);
+
+const key="keepgooing-v1";
+
+let data={saved:[],done:false,translation:""};
+
+try{data={...data,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
+
+function persist(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){}}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function render(){
+
+$("dailyWords").innerHTML=words.map(w=>`<div class="item"><span class="word">${w[0]}</span><span class="translation">— ${w[1]}</span><div class="example">${w[2]}</div></div>`).join("");
+
+$("dailySentences").innerHTML=sentences.map((s,i)=>`<div class="item"><b>${i+1}.</b> ${s}</div>`).join("");
+
+$("savedWords").innerHTML=data.saved.map(w=>`<div class="item"><b>${escapeHtml(w.word)}</b> — ${escapeHtml(w.meaning)}<div class="example">${escapeHtml(w.example||"")}</div></div>`).join("")||'<p class="muted">No personal words saved yet.</p>';
+
+$("translation").value=data.translation||"";
+
+const pct=data.done?100:0;
+
+$("pct").textContent=pct+"%";
+
+$("arc").style.strokeDashoffset=295.3*(1-pct/100);
+
+$("progressText").textContent=data.done?"Today's lesson is complete. Well done!":"Start with one small step today.";
+
+}
+
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+
+document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+
+document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+
+b.classList.add("active");$(b.dataset.tab).classList.add("active");
+
+}));
+
+$("addWord").onclick=()=>{
+
+let word=$("newWord").value.trim(),meaning=$("newMeaning").value.trim();
+
+if(!word||!meaning)return alert("Please enter an English word and its German meaning.");
+
+data.saved.unshift({word,meaning,example:$("newExample").value.trim()});
+
+persist();$("newWord").value=$("newMeaning").value=$("newExample").value="";render();
+
+};
+
+$("quizNext").onclick=()=>{
+
+let pool=[...words.map(w=>({word:w[0],meaning:w[1]})),...data.saved];
+
+if(!pool.length)return;
+
+let item=pool[Math.floor(Math.random()*pool.length)];
+
+$("quizWord").textContent=item.word;
+
+$("quizMeaning").textContent="Think of the German meaning, then tap the word to reveal it.";
+
+$("quizWord").onclick=()=>$("quizMeaning").textContent=item.meaning;
+
+};
+
+$("completeToday").onclick=()=>{data.done=true;persist();render()};
+
+$("saveTranslation").onclick=()=>{
+
+data.translation=$("translation").value;persist();
+
+$("translationStatus").textContent="Your translation has been saved on this device.";
+
+};
+
+$("listen").onclick=()=>{
+
+if(!("speechSynthesis" in window)){$("speechResult").textContent="Speech playback is not supported.";return;}
+
+let u=new SpeechSynthesisUtterance($("speakSentence").textContent);u.lang="en-GB";speechSynthesis.speak(u);
+
+};
+
+$("record").onclick=()=>{
+
+let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+if(!SR){$("speechResult").textContent="Speech recognition is not available in this browser. You can still practise by reading aloud.";return;}
+
+let r=new SR();r.lang="en-GB";r.interimResults=false;
+
+r.onresult=e=>$("speechResult").textContent="I heard: "+e.results[0][0].transcript;
+
+r.onerror=()=>$("speechResult").textContent="I couldn't recognise that. Please try again.";
+
+r.start();$("speechResult").textContent="Listening…";
+
+};
+
+render();
+
+</script>
+
+</body>
+
+</html>
