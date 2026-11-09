@@ -1,403 +1,772 @@
 
-
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="de">
-
 <head>
-
-<meta charset="utf-8">
-
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
-<meta name="theme-color" content="#171513">
-
-<title>KEEPGOOING — Your English Journey</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171614">
+<title>go on</title>
 <style>
-
-:root{--bg:#171513;--panel:#24211e;--text:#f3eee7;--muted:#b8ada1;--gold:#c9a878;--line:#484038;--good:#9bb69a}
-
-*{box-sizing:border-box}
-
-body{margin:0;background:radial-gradient(circle at 50% 0,#393027 0,#171513 48%);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-
-header{text-align:center;padding:24px 18px 12px}
-
-h1{margin:0;font-size:32px;letter-spacing:2px}
-
-header p{color:var(--muted);font-size:13px;letter-spacing:1px}
-
-main{max-width:760px;margin:auto;padding:10px 15px 100px}
-
-.hero{display:flex;align-items:center;gap:18px;background:linear-gradient(145deg,#302a24,#211e1b);border:1px solid var(--line);border-radius:22px;padding:18px;margin:10px 0}
-
-.progress{width:112px;height:112px;flex:none;position:relative}
-
-.progress svg{transform:rotate(-90deg)}
-
-.track{stroke:#51483e;stroke-width:8;fill:none}
-
-.arc{stroke:var(--gold);stroke-width:8;fill:none;stroke-linecap:round;transition:stroke-dashoffset .4s}
-
-.progress .inside{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
-
-.inside b{font-size:25px}
-
-.inside small{font-size:10px;color:var(--muted)}
-
-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:16px 0}
-
-nav button{padding:10px 3px;border:1px solid var(--line);border-radius:12px;background:#211e1b;color:var(--muted);font-size:12px}
-
-nav button.active{background:var(--gold);color:#211b14;font-weight:700}
-
-.panel{display:none;background:rgba(36,33,30,.96);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}
-
-.panel.active{display:block}
-
-h2{font-size:21px;margin:0 0 12px}
-
-h3{font-size:16px;margin:16px 0 7px;color:var(--gold)}
-
-.muted{color:var(--muted);font-size:13px}
-
-.item{padding:12px 0;border-bottom:1px solid var(--line)}
-
-.word{font-weight:700;font-size:17px}
-
-.translation{color:var(--muted);margin-left:7px}
-
-.example{font-size:14px;color:#e0d7cc;margin-top:4px}
-
-button{cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:#211b14;border-radius:12px;padding:11px 14px;font-weight:650;font-size:14px}
-
-button.secondary{background:transparent;color:var(--gold)}
-
-input,textarea,select{width:100%;background:#171513;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;margin:5px 0 10px}
-
-textarea{min-height:100px}
-
-.row{display:flex;gap:8px}
-
-.row>*{flex:1;min-width:0}
-
-.card{background:#1b1917;border:1px solid var(--line);border-radius:13px;padding:13px;margin:10px 0}
-
-.feedback{min-height:24px;color:var(--good);font-size:14px}
-
-.mandala{width:74px;height:74px;margin:12px auto;display:block}
-
-footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
-
+:root {
+  --bg:#171614;
+  --panel:#22201d;
+  --panel2:#2b2823;
+  --gold:#c6a56a;
+  --gold2:#e0c18a;
+  --text:#eee9df;
+  --muted:#aaa397;
+  --line:#494237;
+  --green:#829b78;
+  --red:#bb7770;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+button,input,select,textarea {font:inherit}
+button {
+  cursor:pointer;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 14px;
+  background:var(--panel2);
+  color:var(--text);
+}
+button:hover {border-color:var(--gold)}
+button.primary {
+  background:var(--gold);
+  color:#171614;
+  border-color:var(--gold);
+  font-weight:bold;
+}
+button.small {padding:6px 10px;font-size:13px}
+input,select,textarea {
+  width:100%;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#191815;
+  color:var(--text);
+  margin:5px 0 12px;
+}
+textarea {min-height:100px;resize:vertical}
+label {color:var(--muted);font-size:13px}
+header {
+  padding:22px 18px 12px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+.logo {
+  font-family:Georgia,serif;
+  font-size:38px;
+  letter-spacing:4px;
+  color:var(--gold2);
+}
+.subtitle {font-size:11px;letter-spacing:3px;color:var(--muted)}
+nav {
+  display:flex;
+  gap:7px;
+  padding:12px;
+  overflow-x:auto;
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(23,22,20,.97);
+  border-bottom:1px solid var(--line);
+}
+nav button {white-space:nowrap;font-size:13px;padding:9px 12px}
+nav button.active {background:var(--gold);color:#171614;border-color:var(--gold)}
+main {max-width:900px;margin:auto;padding:18px 14px 90px}
+.page {display:none}
+.page.active {display:block}
+h1,h2,h3 {font-family:Georgia,serif;font-weight:normal}
+h1 {font-size:27px;color:var(--gold2)}
+h2 {font-size:22px;color:var(--gold2)}
+h3 {font-size:18px}
+p {color:#ded8cc}
+.muted {color:var(--muted)}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:17px;
+  margin:13px 0;
+}
+.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.row {display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.row>* {flex:1}
+.stat {text-align:center}
+.stat strong {display:block;font-size:25px;color:var(--gold2)}
+.ring {
+  width:150px;height:150px;border-radius:50%;
+  margin:15px auto;
+  display:grid;place-items:center;
+  background:conic-gradient(var(--gold) var(--progress,0%),#494237 0);
+  position:relative;
+}
+.ring:before {
+  content:"";position:absolute;inset:10px;border-radius:50%;
+  background:var(--panel);
+}
+.ring-content {position:relative;text-align:center}
+.ring-content strong {font-size:30px;color:var(--gold2);display:block}
+.word {font-size:23px;color:var(--gold2);font-weight:bold}
+.translation {font-size:16px;color:var(--muted)}
+.example {font-style:italic;color:#ded8cc}
+.tag {
+  display:inline-block;border:1px solid var(--line);
+  color:var(--gold2);padding:3px 8px;border-radius:20px;
+  font-size:11px;margin:2px;
+}
+.notice {font-size:13px;color:var(--muted)}
+hr {border:0;border-top:1px solid var(--line);margin:17px 0}
+.word-item {padding:12px 0;border-bottom:1px solid var(--line)}
+.word-item:last-child {border-bottom:0}
+.picture-card {
+  min-height:160px;display:flex;flex-direction:column;
+  justify-content:space-between;
+  background:linear-gradient(145deg,#34302a,#1d1b18);
+}
+.picture-symbol {font-size:42px;color:var(--gold2)}
+.answer {margin-top:10px;padding:12px;background:#191815;border-radius:9px}
+.hidden {display:none!important}
+footer {text-align:center;color:var(--muted);font-size:11px;padding:25px}
 </style>
-
 </head>
-
 <body>
 
 <header>
-
-<svg class="mandala" viewBox="0 0 100 100" aria-label="Mandala">
-
-<g fill="none" stroke="#c9a878" stroke-width="1.1">
-
-<circle cx="50" cy="50" r="8"/><circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="29"/><circle cx="50" cy="50" r="40"/>
-
-<g id="petal"><path d="M50 10 C38 25 38 35 50 50 C62 35 62 25 50 10Z"/></g>
-
-<use href="#petal" transform="rotate(30 50 50)"/><use href="#petal" transform="rotate(60 50 50)"/><use href="#petal" transform="rotate(90 50 50)"/><use href="#petal" transform="rotate(120 50 50)"/><use href="#petal" transform="rotate(150 50 50)"/><use href="#petal" transform="rotate(180 50 50)"/><use href="#petal" transform="rotate(210 50 50)"/><use href="#petal" transform="rotate(240 50 50)"/><use href="#petal" transform="rotate(270 50 50)"/><use href="#petal" transform="rotate(300 50 50)"/><use href="#petal" transform="rotate(330 50 50)"/>
-
-<path d="M50 3V97M3 50H97M17 17L83 83M83 17L17 83"/>
-
-</g>
-
-</svg>
-
-<h1>KEEPGOOING</h1>
-
-<p>LEARN · GROW · KEEP GOING</p>
-
+  <div class="logo">go on</div>
+  <div class="subtitle">YOUR ENGLISH JOURNEY</div>
 </header>
+
+<nav id="navigation">
+  <button class="active" data-page="home">Start</button>
+  <button data-page="today">Heute</button>
+  <button data-page="words">Words</button>
+  <button data-page="translate">Übersetzen</button>
+  <button data-page="pictures">Pictures</button>
+  <button data-page="reading">Lesen</button>
+  <button data-page="speaking">Sprechen</button>
+  <button data-page="subtitles">Untertitel</button>
+  <button data-page="library">Bibliothek</button>
+  <button data-page="settings">Einstellungen</button>
+</nav>
 
 <main>
 
-<section class="hero">
-
-<div class="progress">
-
-<svg width="112" height="112" viewBox="0 0 112 112">
-
-<circle class="track" cx="56" cy="56" r="47"/>
-
-<circle id="arc" class="arc" cx="56" cy="56" r="47" stroke-dasharray="295.3" stroke-dashoffset="295.3"/>
-
-</svg>
-
-<div class="inside"><b id="pct">0%</b><small>TODAY</small></div>
-
-</div>
-
-<div><h2>Your daily progress</h2><p id="progressText">Start with one small step today.</p><p class="muted">10 words · 10 sentences · daily practice</p></div>
-
+<section id="home" class="page active">
+  <h1>Welcome back.</h1>
+  <p class="muted">Jeder Tag bringt dich ein Stück weiter.</p>
+  <div class="card stat">
+    <div class="ring" id="progressRing">
+      <div class="ring-content">
+        <strong id="progressNumber">0%</strong>
+        <span class="muted">today</span>
+      </div>
+    </div>
+    <p id="progressText">Dein heutiger Lernfortschritt</p>
+    <div class="grid">
+      <div class="stat"><strong id="homeWords">0</strong><span class="muted">Wörter gelernt</span></div>
+      <div class="stat"><strong id="homeSentences">0</strong><span class="muted">Sätze gelernt</span></div>
+      <div class="stat"><strong id="homeTexts">0</strong><span class="muted">Texte gelesen</span></div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Today's words</h3>
+      <p>Deine zehn neuen Wörter für heute.</p>
+      <button class="primary" onclick="showPage('today')">Start learning</button>
+    </div>
+    <div class="card">
+      <h3>Smart Revision</h3>
+      <p>Wiederhole gespeicherte Wörter in zufälliger Reihenfolge.</p>
+      <button onclick="startQuiz()">Start quiz</button>
+    </div>
+    <div class="card">
+      <h3>Translation</h3>
+      <p>Übersetze Wörter und ganze Sätze in beide Richtungen.</p>
+      <button onclick="showPage('translate')">Translate</button>
+    </div>
+    <div class="card">
+      <h3>Reading</h3>
+      <p>Lies englische Texte und erweitere deinen Wortschatz.</p>
+      <button onclick="showPage('reading')">Read now</button>
+    </div>
+  </div>
 </section>
 
-<nav>
-
-<button class="active" data-tab="today">Today</button>
-
-<button data-tab="words">Words</button>
-
-<button data-tab="reading">Reading</button>
-
-<button data-tab="speak">Speaking</button>
-
-</nav>
-
-<section class="panel active" id="today">
-
-<h2>Today's lesson</h2>
-
-<p class="muted">Your daily learning starts here.</p>
-
-<h3>10 useful words</h3><div id="dailyWords"></div>
-
-<h3>10 everyday sentences</h3><div id="dailySentences"></div>
-
-<button id="completeToday">Mark today's lesson as done</button>
-
+<section id="today" class="page">
+  <h1>Today's lesson</h1>
+  <p class="muted">Zehn vorgeschlagene Wörter. Du entscheidest, welche du lernen möchtest.</p>
+  <div class="card">
+    <div class="row">
+      <div><span class="tag">10 words per day</span></div>
+      <div><span class="tag" id="todayDate"></span></div>
+    </div>
+    <div id="dailyWords"></div>
+    <button class="primary" onclick="finishDaily()">Tageslektion abschließen</button>
+  </div>
+  <div class="card">
+    <h2>Ten everyday sentences</h2>
+    <div id="dailySentences"></div>
+  </div>
 </section>
 
-<section class="panel" id="words">
-
-<h2>My vocabulary</h2>
-
-<p class="muted">Add your own words. They stay saved in this browser on this device.</p>
-
-<div class="row"><input id="newWord" placeholder="English word"><input id="newMeaning" placeholder="German meaning"></div>
-
-<input id="newExample" placeholder="Short everyday example (optional)">
-
-<button id="addWord">Save word</button>
-
-<div id="savedWords"></div>
-
-<h3>Random review</h3>
-
-<div class="card"><b id="quizWord">Tap to start a quiz</b><p id="quizMeaning" class="muted"></p><button class="secondary" id="quizNext">Show a random word</button></div>
-
+<section id="words" class="page">
+  <h1>Words</h1>
+  <div class="card">
+    <h2>Add your own word</h2>
+    <label>English or German word</label>
+    <input id="newWord" placeholder="e.g. freedom / Freiheit">
+    <label>Translation</label>
+    <input id="newMeaning" placeholder="German or English">
+    <label>Example sentence</label>
+    <input id="newExample" placeholder="A short everyday sentence">
+    <button class="primary" onclick="addOwnWord()">Save word</button>
+    <button onclick="speakText(document.getElementById('newWord').value)">Listen</button>
+  </div>
+  <div class="card">
+    <h2>Your vocabulary</h2>
+    <input id="wordSearch" placeholder="Search words..." oninput="renderLibraryWords()">
+    <div id="wordList"></div>
+  </div>
+  <div class="card">
+    <h2>Smart Revision</h2>
+    <p>Die Abfrage wählt gespeicherte Wörter zufällig aus. Falsch beantwortete Wörter werden bei späteren Wiederholungen häufiger berücksichtigt.</p>
+    <button class="primary" onclick="startQuiz()">Start random quiz</button>
+    <div id="quizArea"></div>
+  </div>
 </section>
 
-<section class="panel" id="reading">
-
-<h2>Reading & translation</h2>
-
-<p class="muted">Read the English text, then write your German translation.</p>
-
-<div class="card"><b>A small step every day</b>
-
-<p>To make progress, I practise gently and thoroughly every day. I choose fresh ingredients for dinner and use a kitchen appliance to prepare them. I try to maintain a healthy routine. The room is slightly cold, so I close the window. I will go for a walk unless it rains. I have already finished my homework; instead of watching television, I read a short story. Reading improves my comprehension.</p>
-
-</div>
-
-<textarea id="translation" placeholder="Write your German translation here..."></textarea>
-
-<button id="saveTranslation">Save my translation on this device</button>
-
-<p id="translationStatus" class="feedback"></p>
-
-<h3>Video subtitle practice</h3>
-
-<select id="subtitleMode">
-
-<option>German audio / English subtitles</option>
-
-<option>English audio / German subtitles</option>
-
-</select>
-
-<p class="muted">This is a practice preference. Video playback and subtitle sources are not connected yet.</p>
-
+<section id="translate" class="page">
+  <h1>Translation</h1>
+  <div class="card">
+    <p>Gib ein Wort oder einen Satz ein. Die Richtung wird anhand des Textes grob erkannt.</p>
+    <label>Your text</label>
+    <textarea id="translationInput" placeholder="Write something in German or English..."></textarea>
+    <button class="primary" onclick="translateText()">Translate</button>
+    <div id="translationResult" class="answer hidden"></div>
+    <p class="notice">Die Übersetzung verwendet einen kostenlosen externen Dienst. Verfügbarkeit, Qualität und Nutzungsgrenzen können sich ändern. Bitte kontrolliere das Ergebnis.</p>
+  </div>
+  <div class="card">
+    <h2>Save translation</h2>
+    <label>Word or sentence</label>
+    <input id="saveSource" placeholder="Original">
+    <label>Translation</label>
+    <input id="saveTarget" placeholder="Translation">
+    <button onclick="saveTranslation()">Save in library</button>
+  </div>
 </section>
 
-<section class="panel" id="speak">
-
-<h2>Speaking practice</h2>
-
-<p class="muted">Read the sentence aloud. If your browser supports speech recognition, the app will show what it understood. This is not a full AI pronunciation assessment.</p>
-
-<div class="card"><b id="speakSentence">I practise English a little every day.</b></div>
-
-<div class="row"><button id="listen">Listen</button><button class="secondary" id="record">Speak</button></div>
-
-<p id="speechResult" class="feedback">Your recognised words will appear here.</p>
-
-<p class="muted">If speech recognition is unavailable, practise by reading aloud.</p>
-
+<section id="pictures" class="page">
+  <h1>Pictures</h1>
+  <p class="muted">Englische Wörter und Ausdrücke mit visuellen Merkhilfen.</p>
+  <div class="grid" id="pictureGrid"></div>
+  <p class="notice">Diese kostenlose Grundversion verwendet symbolische Merkhilfen statt echter Illustrationen. Für echte Bildserien können später passende Bilddateien ergänzt werden.</p>
 </section>
 
-<footer>KEEPGOOING · Your English journey, one step at a time.</footer>
+<section id="reading" class="page">
+  <h1>Reading</h1>
+  <div class="card">
+    <label>Choose your level</label>
+    <select id="readingLevel" onchange="renderReading()">
+      <option value="A1">CEFR A1</option>
+      <option value="A2">CEFR A2</option>
+      <option value="B1" selected>CEFR B1</option>
+      <option value="B2">CEFR B2</option>
+      <option value="C1">CEFR C1</option>
+      <option value="C2">CEFR C2</option>
+      <option value="R6">Realschule Klasse 6</option>
+      <option value="R7">Realschule Klasse 7</option>
+      <option value="R8">Realschule Klasse 8</option>
+      <option value="R9">Realschule Klasse 9</option>
+      <option value="R10">Realschule Klasse 10</option>
+      <option value="G6">Gymnasium Klasse 6</option>
+      <option value="G7">Gymnasium Klasse 7</option>
+      <option value="G8">Gymnasium Klasse 8</option>
+      <option value="G9">Gymnasium Klasse 9</option>
+      <option value="G10">Gymnasium Klasse 10</option>
+      <option value="G11">Gymnasium Klasse 11</option>
+      <option value="G12">Gymnasium Klasse 12</option>
+      <option value="G13">Gymnasium Klasse 13</option>
+    </select>
+    <label>Choose a topic</label>
+    <select id="readingTopic" onchange="renderReading()">
+      <option value="india">India: Society and everyday life</option>
+      <option value="culture">Culture and traditions</option>
+      <option value="history">History and development</option>
+      <option value="psychology">Psychology and relationships</option>
+      <option value="nature">Nature and science</option>
+    </select>
+  </div>
+  <div class="card">
+    <div id="readingText"></div>
+    <hr>
+    <button onclick="toggleGerman()">Show / hide German translation</button>
+    <div id="germanText" class="hidden answer"></div>
+    <hr>
+    <h3>Words from the text</h3>
+    <div id="textWords"></div>
+    <button onclick="saveTextWords()">Save text vocabulary</button>
+    <hr>
+    <h3>Your translation</h3>
+    <textarea id="myTranslation" placeholder="Write your German translation here..."></textarea>
+    <button onclick="saveReadingTranslation()">Save my translation</button>
+    <p class="notice">Diese Version bietet keine automatische KI-Korrektur deiner Übersetzung. Du kannst sie speichern und mit der Musterübersetzung vergleichen.</p>
+    <hr>
+    <h3>Comprehension</h3>
+    <p id="questionText"></p>
+    <input id="questionAnswer" placeholder="Your answer in English">
+    <button onclick="checkReadingAnswer()">Check answer</button>
+    <div id="questionFeedback"></div>
+  </div>
+</section>
+
+<section id="speaking" class="page">
+  <h1>Speaking</h1>
+  <div class="card">
+    <h2>Read aloud</h2>
+    <p>Sprich einen englischen Satz. Dein Browser kann versuchen, deine Worte zu erkennen.</p>
+    <label>Sentence to practise</label>
+    <textarea id="speakInput">I want to improve my English every day.</textarea>
+    <button onclick="speakText(document.getElementById('speakInput').value)">Listen to sentence</button>
+    <button class="primary" onclick="startSpeechRecognition()">Start speaking</button>
+    <div id="speechResult" class="answer">Your recognised speech will appear here.</div>
+    <p class="notice">Die Spracherkennung hängt vom Browser und Gerät ab. Sie prüft den erkannten Wortlaut, ist aber keine zuverlässige professionelle Aussprachebewertung.</p>
+  </div>
+</section>
+
+<section id="subtitles" class="page">
+  <h1>Subtitle practice</h1>
+  <div class="card">
+    <p>Füge Untertitel oder einen kurzen Dialog ein und übe damit.</p>
+    <label>Choose your mode</label>
+    <select id="subtitleMode">
+      <option>German video – English subtitles</option>
+      <option>English video – German subtitles</option>
+      <option>English video – English subtitles</option>
+    </select>
+    <label>Paste subtitle text</label>
+    <textarea id="subtitleInput" placeholder="Paste subtitles here..."></textarea>
+    <button class="primary" onclick="showSubtitles()">Start practice</button>
+    <div id="subtitleOutput"></div>
+    <p class="notice">Diese Version bindet keine Videos automatisch ein und lädt keine Untertitel von Videoplattformen herunter. Du kannst vorhandene Untertiteltexte einfügen.</p>
+  </div>
+</section>
+
+<section id="library" class="page">
+  <h1>Library</h1>
+  <div class="card">
+    <div class="row">
+      <button onclick="showLibraryTab('words')">Words</button>
+      <button onclick="showLibraryTab('sentences')">Sentences</button>
+      <button onclick="showLibraryTab('texts')">Texts</button>
+    </div>
+    <div id="libraryContent"></div>
+  </div>
+  <div class="card">
+    <h2>Backup</h2>
+    <p>Exportiere deine gespeicherten Daten als Datei, um sie später wieder einzulesen.</p>
+    <button onclick="exportData()">Export data</button>
+    <label>Import backup</label>
+    <input type="file" id="importFile" accept=".json,application/json" onchange="importData(event)">
+  </div>
+</section>
+
+<section id="settings" class="page">
+  <h1>Settings</h1>
+  <div class="card">
+    <h2>Your learning level</h2>
+    <label>CEFR / school level</label>
+    <select id="levelSetting">
+      <option>A1</option><option>A2</option><option selected>B1</option>
+      <option>B2</option><option>C1</option><option>C2</option>
+      <option>Realschule 6</option><option>Realschule 7</option>
+      <option>Realschule 8</option><option>Realschule 9</option>
+      <option>Realschule 10</option>
+      <option>Gymnasium 6</option><option>Gymnasium 7</option>
+      <option>Gymnasium 8</option><option>Gymnasium 9</option>
+      <option>Gymnasium 10</option><option>Gymnasium 11</option>
+      <option>Gymnasium 12</option><option>Gymnasium 13</option>
+    </select>
+    <label>Daily new words</label>
+    <input value="10" disabled>
+    <label>Daily sentences</label>
+    <input value="10" disabled>
+    <p class="notice">Die tägliche Grundlektion enthält zehn Wörter und zehn Sätze. Die Auswahl kann in dieser Version noch nicht vollständig personalisiert werden.</p>
+  </div>
+  <div class="card">
+    <h2>Speech</h2>
+    <label>Speech speed</label>
+    <input type="range" min="0.6" max="1.2" step="0.1" id="speechRate" value="0.9">
+    <button onclick="speakText('Welcome back. Let us practise English.')">Test voice</button>
+  </div>
+  <div class="card">
+    <h2>Your data</h2>
+    <p>Deine Lerninhalte werden lokal in diesem Browser gespeichert. Ohne zusätzliches Konto und Backend gibt es keine automatische Synchronisierung zwischen Geräten.</p>
+    <button onclick="if(confirm('Really delete all saved learning data?')){localStorage.removeItem('goOnData');location.reload()}">Delete all learning data</button>
+  </div>
+</section>
 
 </main>
+<footer>go on · Learn a little. Every day.</footer>
 
 <script>
-
-const words=[
-
-["gently","sanft","Please close the door gently."],
-
-["ingredients","Zutaten","We need a few fresh ingredients."],
-
-["maintain","aufrechterhalten / pflegen","I try to maintain a healthy routine."],
-
-["unless","wenn nicht / außer","I will walk unless it rains."],
-
-["thoroughly","gründlich","Please wash your hands thoroughly."],
-
-["appliance","Haushaltsgerät","This kitchen appliance is easy to use."],
-
-["slightly","leicht / geringfügig","The soup is slightly too hot."],
-
-["comprehension","Verständnis","Reading helps my comprehension."],
-
-["already","schon / bereits","I have already finished my work."],
-
-["instead","stattdessen","Let's stay home instead."]
-
+const DAILY_WORDS = [
+ ["approach","sich nähern; Herangehensweise","We need a different approach."],
+ ["aware","bewusst","Are you aware of the problem?"],
+ ["benefit","Vorteil; profitieren","Exercise has many benefits."],
+ ["challenge","Herausforderung","Learning a language is a challenge."],
+ ["consider","in Betracht ziehen","I will consider your idea."],
+ ["despite","trotz","Despite the rain, we went out."],
+ ["environment","Umwelt; Umgebung","We should protect the environment."],
+ ["improve","verbessern","I want to improve my English."],
+ ["opportunity","Gelegenheit","This is a great opportunity."],
+ ["reliable","zuverlässig","She is a reliable person."]
 ];
 
-const sentences=[
-
-"Could you help me, please?",
-
-"I am looking forward to the weekend.",
-
-"That sounds like a good idea.",
-
-"I would rather have some tea.",
-
-"I have not decided yet.",
-
-"Could you explain that again?",
-
-"It depends on the weather.",
-
-"I am trying to improve my English.",
-
-"We should leave a little earlier.",
-
-"I completely understand what you mean."
-
+const DAILY_SENTENCES = [
+ ["I will think about it.","Ich werde darüber nachdenken."],
+ ["That makes sense.","Das ergibt Sinn."],
+ ["I completely agree.","Ich stimme vollkommen zu."],
+ ["It depends on the situation.","Das hängt von der Situation ab."],
+ ["Could you explain that again?","Könntest du das noch einmal erklären?"],
+ ["I am not sure about that.","Da bin ich mir nicht sicher."],
+ ["What would you suggest?","Was würdest du vorschlagen?"],
+ ["I did not expect that.","Das habe ich nicht erwartet."],
+ ["Let me know when you are ready.","Sag mir Bescheid, wenn du bereit bist."],
+ ["I would rather stay at home.","Ich würde lieber zu Hause bleiben."]
 ];
 
-const $=id=>document.getElementById(id);
+const PICTURES = [
+ ["I'm done","Ich bin fertig","🧍","I have finished what I was doing."],
+ ["Get out","Verschwinde / Geh raus","🚪","A direct and sometimes rude command."],
+ ["Stay away","Halte dich fern","✋","A warning to keep your distance."],
+ ["Stop it","Hör auf damit","🛑","Used when someone should stop doing something."],
+ ["Go away","Geh weg","🚶","A direct way to ask someone to leave."],
+ ["Leave me alone","Lass mich in Ruhe","🙅","Used when you want to be left alone."],
+ ["Get lost","Hau ab","🌫️","Very rude and dismissive."],
+ ["Pumpkin","Kürbis","🎃","A large orange vegetable."],
+ ["Cauliflower","Blumenkohl","🥦","A white vegetable with a compact head."],
+ ["Kale","Grünkohl","🥬","A leafy green vegetable."],
+ ["Fraud","Betrug","⚖️","Dishonest behaviour intended to gain something."],
+ ["Bribery","Bestechung","💶","Offering money or gifts to influence a decision."],
+ ["Robbery","Raub","🏚️","Taking property by using force or threats."],
+ ["Smuggling","Schmuggel","📦","Moving goods illegally across borders."],
+ ["Kidnapping","Entführung","🚨","Taking a person away by force."]
+];
 
-const key="keepgooing-v1";
+const READING = {
+ india: {
+  title:"India: A country of contrasts",
+  paragraphs:[
+   "India is one of the largest countries in the world. It has a very large population and many different languages, religions and cultural traditions. Life can look very different from one region to another.",
+   "In large cities, modern buildings, busy roads and digital services are part of everyday life. At the same time, many people live in villages, where agriculture and close community relationships remain important.",
+   "Family often plays an important role in Indian society. However, family structures and expectations are changing. Younger generations may combine traditional values with new ideas about education, work and personal independence.",
+   "India is also a country of contrasts. Economic growth has created new opportunities, but poverty and unequal access to education and healthcare remain serious challenges. These differences influence the lives of millions of people."
+  ],
+  german:"Indien ist eines der größten Länder der Welt. Es hat eine sehr große Bevölkerung und viele verschiedene Sprachen, Religionen und kulturelle Traditionen. Das Leben kann von einer Region zur anderen sehr unterschiedlich aussehen.\n\nIn großen Städten gehören moderne Gebäude, stark befahrene Straßen und digitale Dienstleistungen zum Alltag. Gleichzeitig leben viele Menschen in Dörfern, in denen Landwirtschaft und enge Gemeinschaftsbeziehungen weiterhin wichtig sind.\n\nDie Familie spielt in der indischen Gesellschaft häufig eine wichtige Rolle. Allerdings verändern sich Familienstrukturen und Erwartungen. Jüngere Generationen verbinden möglicherweise traditionelle Werte mit neuen Vorstellungen von Bildung, Arbeit und persönlicher Unabhängigkeit.\n\nIndien ist auch ein Land der Gegensätze. Das Wirtschaftswachstum hat neue Möglichkeiten geschaffen, doch Armut und ein ungleicher Zugang zu Bildung und Gesundheitsversorgung bleiben große Herausforderungen. Diese Unterschiede beeinflussen das Leben von Millionen Menschen.",
+  words:[["population","Bevölkerung"],["tradition","Tradition"],["agriculture","Landwirtschaft"],["expectation","Erwartung"],["independence","Unabhängigkeit"],["opportunity","Möglichkeit"],["inequality","Ungleichheit"]],
+  question:"Name two challenges that still exist in India.",
+  answer:"poverty and unequal access to education and healthcare"
+ },
+ culture:{
+  title:"Culture and traditions",
+  paragraphs:[
+   "Culture is shaped by history, religion, language, food and everyday habits. Traditions can connect generations and give people a feeling of belonging.",
+   "However, traditions are not fixed. They change when people move, communicate with others and experience new ideas. A society can respect its past while developing new ways of living.",
+   "Understanding another culture requires curiosity and patience. It is important not to assume that everyone in a country thinks or behaves in the same way."
+  ],
+  german:"Kultur wird durch Geschichte, Religion, Sprache, Essen und alltägliche Gewohnheiten geprägt. Traditionen können Generationen verbinden und Menschen ein Gefühl der Zugehörigkeit geben.\n\nTraditionen sind jedoch nicht unveränderlich. Sie wandeln sich, wenn Menschen umziehen, mit anderen kommunizieren und neue Ideen kennenlernen. Eine Gesellschaft kann ihre Vergangenheit respektieren und gleichzeitig neue Lebensweisen entwickeln.\n\nEine andere Kultur zu verstehen, erfordert Neugier und Geduld. Es ist wichtig, nicht anzunehmen, dass alle Menschen in einem Land gleich denken oder handeln.",
+  words:[["belonging","Zugehörigkeit"],["generation","Generation"],["fixed","fest; unveränderlich"],["curiosity","Neugier"],["assume","annehmen"]],
+  question:"Why should we avoid generalisations about a culture?",
+  answer:"because people in one country do not all think or behave in the same way"
+ },
+ history:{
+  title:"History and social development",
+  paragraphs:[
+   "A country's history influences its institutions, traditions and public debates. Historical events can shape how people understand identity, freedom and responsibility.",
+   "Social development is rarely simple. Political decisions, economic changes, education and technology all influence the direction of a society.",
+   "Looking at history from different perspectives can help us understand why people disagree about the present and what they hope for in the future."
+  ],
+  german:"Die Geschichte eines Landes beeinflusst seine Institutionen, Traditionen und öffentlichen Debatten. Historische Ereignisse können prägen, wie Menschen Identität, Freiheit und Verantwortung verstehen.\n\nGesellschaftliche Entwicklung ist selten einfach. Politische Entscheidungen, wirtschaftliche Veränderungen, Bildung und Technologie beeinflussen alle die Richtung einer Gesellschaft.\n\nDie Geschichte aus unterschiedlichen Perspektiven zu betrachten, kann uns helfen zu verstehen, warum Menschen über die Gegenwart unterschiedlicher Meinung sind und was sie sich für die Zukunft erhoffen.",
+  words:[["institution","Institution"],["responsibility","Verantwortung"],["development","Entwicklung"],["perspective","Perspektive"],["debate","Debatte"]],
+  question:"Which factors influence social development?",
+  answer:"politics, economic changes, education and technology"
+ },
+ psychology:{
+  title:"Understanding people",
+  paragraphs:[
+   "Human behaviour is influenced by emotions, experiences, values and social surroundings. People do not always react in the same way, even when they face similar situations.",
+   "Good communication involves listening carefully, asking questions and expressing thoughts clearly. Disagreement does not have to become a conflict if people treat each other with respect.",
+   "Self-awareness can help people recognise their own reactions and understand how their behaviour affects others."
+  ],
+  german:"Menschliches Verhalten wird durch Gefühle, Erfahrungen, Werte und das soziale Umfeld beeinflusst. Menschen reagieren nicht immer gleich, selbst wenn sie mit ähnlichen Situationen konfrontiert sind.\n\nGute Kommunikation bedeutet, aufmerksam zuzuhören, Fragen zu stellen und Gedanken klar auszudrücken. Unterschiedliche Meinungen müssen nicht zu einem Konflikt führen, wenn Menschen respektvoll miteinander umgehen.\n\nSelbstwahrnehmung kann Menschen dabei helfen, ihre eigenen Reaktionen zu erkennen und zu verstehen, wie ihr Verhalten andere beeinflusst.",
+  words:[["behaviour","Verhalten"],["surroundings","Umfeld"],["disagreement","Meinungsverschiedenheit"],["self-awareness","Selbstwahrnehmung"],["affect","beeinflussen"]],
+  question:"What are three elements of good communication?",
+  answer:"listening, asking questions and expressing thoughts clearly"
+ },
+ nature:{
+  title:"Nature and science",
+  paragraphs:[
+   "Scientific research helps us understand the natural world. Researchers observe patterns, collect evidence and test explanations before drawing conclusions.",
+   "Nature is made up of complex systems. Changes in climate, land use and biodiversity can influence ecosystems and human communities.",
+   "Science does not provide every answer immediately. Progress often depends on careful observation, cooperation and the willingness to question existing ideas."
+  ],
+  german:"Wissenschaftliche Forschung hilft uns, die natürliche Welt zu verstehen. Forschende beobachten Muster, sammeln Belege und überprüfen Erklärungen, bevor sie Schlussfolgerungen ziehen.\n\nDie Natur besteht aus komplexen Systemen. Veränderungen des Klimas, der Landnutzung und der Artenvielfalt können Ökosysteme und menschliche Gemeinschaften beeinflussen.\n\nDie Wissenschaft liefert nicht sofort auf jede Frage eine Antwort. Fortschritt hängt oft von sorgfältiger Beobachtung, Zusammenarbeit und der Bereitschaft ab, bestehende Vorstellungen zu hinterfragen.",
+  words:[["evidence","Beleg"],["conclusion","Schlussfolgerung"],["biodiversity","Artenvielfalt"],["ecosystem","Ökosystem"],["cooperation","Zusammenarbeit"]],
+  question:"What do researchers do before drawing conclusions?",
+  answer:"they observe patterns, collect evidence and test explanations"
+ }
+};
 
-let data={saved:[],done:false,translation:""};
+let data = JSON.parse(localStorage.getItem("goOnData") || "null") || {
+ words:[], sentences:[], texts:[], completed:[], quizCount:0
+};
+let currentQuiz = null;
+let currentReading = null;
+let libraryTab = "words";
+let translationValue = "";
 
-try{data={...data,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
-
-function persist(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){}}
-
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-
-function render(){
-
-$("dailyWords").innerHTML=words.map(w=>`<div class="item"><span class="word">${w[0]}</span><span class="translation">— ${w[1]}</span><div class="example">${w[2]}</div></div>`).join("");
-
-$("dailySentences").innerHTML=sentences.map((s,i)=>`<div class="item"><b>${i+1}.</b> ${s}</div>`).join("");
-
-$("savedWords").innerHTML=data.saved.map(w=>`<div class="item"><b>${escapeHtml(w.word)}</b> — ${escapeHtml(w.meaning)}<div class="example">${escapeHtml(w.example||"")}</div></div>`).join("")||'<p class="muted">No personal words saved yet.</p>';
-
-$("translation").value=data.translation||"";
-
-const pct=data.done?100:0;
-
-$("pct").textContent=pct+"%";
-
-$("arc").style.strokeDashoffset=295.3*(1-pct/100);
-
-$("progressText").textContent=data.done?"Today's lesson is complete. Well done!":"Start with one small step today.";
-
+function save(){
+ localStorage.setItem("goOnData",JSON.stringify(data));
+ updateHome();
 }
+function todayKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ if(id==="words")renderLibraryWords();
+ if(id==="library")renderLibrary();
+}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 
-document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
-
-document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
-
-document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
-
-b.classList.add("active");$(b.dataset.tab).classList.add("active");
-
-}));
-
-$("addWord").onclick=()=>{
-
-let word=$("newWord").value.trim(),meaning=$("newMeaning").value.trim();
-
-if(!word||!meaning)return alert("Please enter an English word and its German meaning.");
-
-data.saved.unshift({word,meaning,example:$("newExample").value.trim()});
-
-persist();$("newWord").value=$("newMeaning").value=$("newExample").value="";render();
-
-};
-
-$("quizNext").onclick=()=>{
-
-let pool=[...words.map(w=>({word:w[0],meaning:w[1]})),...data.saved];
-
-if(!pool.length)return;
-
-let item=pool[Math.floor(Math.random()*pool.length)];
-
-$("quizWord").textContent=item.word;
-
-$("quizMeaning").textContent="Think of the German meaning, then tap the word to reveal it.";
-
-$("quizWord").onclick=()=>$("quizMeaning").textContent=item.meaning;
-
-};
-
-$("completeToday").onclick=()=>{data.done=true;persist();render()};
-
-$("saveTranslation").onclick=()=>{
-
-data.translation=$("translation").value;persist();
-
-$("translationStatus").textContent="Your translation has been saved on this device.";
-
-};
-
-$("listen").onclick=()=>{
-
-if(!("speechSynthesis" in window)){$("speechResult").textContent="Speech playback is not supported.";return;}
-
-let u=new SpeechSynthesisUtterance($("speakSentence").textContent);u.lang="en-GB";speechSynthesis.speak(u);
-
-};
-
-$("record").onclick=()=>{
-
-let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-
-if(!SR){$("speechResult").textContent="Speech recognition is not available in this browser. You can still practise by reading aloud.";return;}
-
-let r=new SR();r.lang="en-GB";r.interimResults=false;
-
-r.onresult=e=>$("speechResult").textContent="I heard: "+e.results[0][0].transcript;
-
-r.onerror=()=>$("speechResult").textContent="I couldn't recognise that. Please try again.";
-
-r.start();$("speechResult").textContent="Listening…";
-
-};
-
-render();
-
+function updateHome(){
+ const done=data.completed.filter(x=>x===todayKey()).length;
+ const dailyDone=data.dailyDone===todayKey();
+ const percent=dailyDone?100:Math.min(95,Math.round((done/10)*100));
+ document.getElementById("progressRing").style.setProperty("--progress",percent+"%");
+ document.getElementById("progressNumber").textContent=percent+"%";
+ document.getElementById("homeWords").textContent=data.words.length;
+ document.getElementById("homeSentences").textContent=data.sentences.length;
+ document.getElementById("homeTexts").textContent=data.texts.length;
+ document.getElementById("progressText").textContent=dailyDone?"Today's lesson completed.":"Keep going. Every step counts.";
+}
+function renderDaily(){
+ document.getElementById("todayDate").textContent=new Date().toLocaleDateString("de-DE");
+ const box=document.getElementById("dailyWords");
+ box.innerHTML="";
+ DAILY_WORDS.forEach((w,i)=>{
+  const exists=data.words.some(x=>x.en.toLowerCase()===w[0].toLowerCase());
+  const div=document.createElement("div");
+  div.className="word-item";
+  div.innerHTML=`<div class="word">${w[0]}</div><div class="translation">${w[1]}</div><p class="example">${w[2]}</p><div class="row"><button class="small" onclick="saveDailyWord(${i})">${exists?"Already saved":"Save word"}</button><button class="small" onclick="speakText('${w[0]}')">Listen</button><button class="small" onclick="skipDailyWord(this)">Skip</button></div>`;
+  box.appendChild(div);
+ });
+ document.getElementById("dailySentences").innerHTML=DAILY_SENTENCES.map((s,i)=>`<div class="word-item"><strong>${i+1}. ${s[0]}</strong><p class="translation">${s[1]}</p><button class="small" onclick="speakText('${s[0].replace(/'/g,"\\'")}')">Listen</button><button class="small" onclick="saveSentence(${i})">Save sentence</button></div>`).join("");
+}
+function saveDailyWord(i){
+ const w=DAILY_WORDS[i];
+ addWord(w[0],w[1],w[2],"Daily");
+}
+function skipDailyWord(btn){
+ btn.closest(".word-item").style.opacity=".35";
+ btn.textContent="Skipped";
+ btn.disabled=true;
+}
+function finishDaily(){
+ data.dailyDone=todayKey();
+ save();
+ alert("Well done! Your daily lesson is completed.");
+}
+function addWord(en,de,example="",source="Own"){
+ if(!en||!de)return;
+ if(data.words.some(w=>w.en.toLowerCase()===en.toLowerCase()))return;
+ data.words.push({en,de,example,source,date:todayKey(),due:0,wrong:0,favorite:false});
+ save();renderLibraryWords();
+}
+function addOwnWord(){
+ addWord(document.getElementById("newWord").value.trim(),document.getElementById("newMeaning").value.trim(),document.getElementById("newExample").value.trim());
+ document.getElementById("newWord").value="";
+ document.getElementById("newMeaning").value="";
+ document.getElementById("newExample").value="";
+}
+function saveSentence(i){
+ const s=DAILY_SENTENCES[i];
+ if(!data.sentences.some(x=>x.en===s[0]))data.sentences.push({en:s[0],de:s[1],date:todayKey()});
+ save();alert("Sentence saved.");
+}
+function renderLibraryWords(){
+ const q=(document.getElementById("wordSearch")?.value||"").toLowerCase();
+ const list=data.words.filter(w=>(w.en+" "+w.de).toLowerCase().includes(q));
+ document.getElementById("wordList").innerHTML=list.length?list.map(w=>wordHTML(w)).join(""):"<p class='muted'>No words saved yet.</p>";
+}
+function wordHTML(w){
+ const i=data.words.indexOf(w);
+ return `<div class="word-item"><div class="row"><div><strong>${escapeHTML(w.en)}</strong><div class="translation">${escapeHTML(w.de)}</div></div><button class="small" onclick="toggleFavorite(${i})">${w.favorite?"★":"☆"}</button></div><p class="example">${escapeHTML(w.example||"")}</p><span class="tag">${escapeHTML(w.source||"Saved")}</span><span class="tag">Wrong: ${w.wrong||0}</span><div class="row"><button class="small" onclick="speakText('${escapeJS(w.en)}')">Listen</button><button class="small" onclick="deleteWord(${i})">Delete</button></div></div>`;
+}
+function escapeHTML(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function escapeJS(s){return String(s??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'");}
+function toggleFavorite(i){data.words[i].favorite=!data.words[i].favorite;save();renderLibraryWords();}
+function deleteWord(i){if(confirm("Delete this word?")){data.words.splice(i,1);save();renderLibraryWords();}}
+function startQuiz(){
+ showPage("words");
+ const due=data.words.filter(w=>(w.due||0)<=Date.now());
+ const pool=due.length?due:data.words;
+ if(!pool.length){document.getElementById("quizArea").innerHTML="<p>Save some words first.</p>";return;}
+ currentQuiz=pool[Math.floor(Math.random()*pool.length)];
+ document.getElementById("quizArea").innerHTML=`<div class="answer"><span class="tag">Random revision</span><h2>What does this mean?</h2><div class="word">${escapeHTML(currentQuiz.en)}</div><input id="quizAnswer" placeholder="Type the German translation"><button class="primary" onclick="checkQuiz()">Check answer</button><div id="quizFeedback"></div></div>`;
+}
+function checkQuiz(){
+ const answer=document.getElementById("quizAnswer").value.trim().toLowerCase();
+ const correct=currentQuiz.de.toLowerCase();
+ const ok=answer===correct || correct.split(/[;,]/).some(x=>answer===x.trim());
+ const feedback=document.getElementById("quizFeedback");
+ if(ok){
+  currentQuiz.due=Date.now()+7*86400000;
+  feedback.innerHTML="<p style='color:var(--green)'>Correct. Well done!</p>";
+ }else{
+  currentQuiz.wrong=(currentQuiz.wrong||0)+1;
+  currentQuiz.due=Date.now()+60000;
+  feedback.innerHTML=`<p style='color:var(--red)'>Not quite. Correct answer: ${escapeHTML(currentQuiz.de)}</p>`;
+ }
+ data.quizCount=(data.quizCount||0)+1;save();
+ feedback.innerHTML+=`<button onclick="startQuiz()">Next word</button>`;
+}
+async function translateText(){
+ const input=document.getElementById("translationInput").value.trim();
+ if(!input)return;
+ const result=document.getElementById("translationResult");
+ result.classList.remove("hidden");result.textContent="Translating...";
+ const isGerman=/[äöüß]/i.test(input)||/\b(ich|und|der|die|das|nicht|ist|habe|wir|du|sie|ein|eine|mit|für)\b/i.test(input);
+ const from=isGerman?"de":"en",to=isGerman?"en":"de";
+ try{
+  const url="https://api.mymemory.translated.net/get?q="+encodeURIComponent(input)+"&langpair="+from+"|"+to;
+  const response=await fetch(url);
+  if(!response.ok)throw new Error("Translation service unavailable");
+  const json=await response.json();
+  translationValue=json.responseData?.translatedText||"";
+  result.innerHTML=`<strong>${escapeHTML(translationValue)}</strong><p class="notice">Detected language: ${from.toUpperCase()} → ${to.toUpperCase()}</p><button onclick="document.getElementById('saveSource').value=document.getElementById('translationInput').value;document.getElementById('saveTarget').value=translationValue">Prepare to save</button>`;
+ }catch(e){
+  result.textContent="Die Übersetzung ist gerade nicht verfügbar. Bitte versuche es später erneut.";
+ }
+}
+function saveTranslation(){
+ const source=document.getElementById("saveSource").value.trim();
+ const target=document.getElementById("saveTarget").value.trim();
+ if(!source||!target){alert("Please enter both texts.");return;}
+ const isEnglish=/[a-z]/i.test(source)&&!/[äöüß]/i.test(source);
+ const en=isEnglish?source:target,de=isEnglish?target:source;
+ addWord(en,de,"","Translation");
+ data.sentences.push({en:source,de:target,date:todayKey()});
+ save();alert("Saved in your library.");
+}
+function renderPictures(){
+ document.getElementById("pictureGrid").innerHTML=PICTURES.map((p,i)=>`<div class="card picture-card"><div><div class="picture-symbol">${p[2]}</div><div class="word">${escapeHTML(p[0])}</div><div class="translation">${escapeHTML(p[1])}</div></div><p class="example">${escapeHTML(p[3])}</p><div class="row"><button class="small" onclick="speakText('${escapeJS(p[0])}')">Listen</button><button class="small" onclick="addWord('${escapeJS(p[0])}','${escapeJS(p[1])}','${escapeJS(p[3])}','Pictures')">Save</button></div></div>`).join("");
+}
+function renderReading(){
+ const topic=document.getElementById("readingTopic").value;
+ const level=document.getElementById("readingLevel").value;
+ currentReading=READING[topic];
+ let paragraphs=currentReading.paragraphs;
+ // This basic version uses one common text for all levels.
+ // Full CEFR adaptation requires additional edited text versions.
+ document.getElementById("readingText").innerHTML=`<span class="tag">${level}</span><h2>${currentReading.title}</h2>${paragraphs.map(p=>`<p>${p}</p>`).join("")}`;
+ document.getElementById("germanText").textContent=currentReading.german;
+ document.getElementById("textWords").innerHTML=currentReading.words.map(w=>`<span class="tag">${w[0]} – ${w[1]}</span>`).join(" ");
+ document.getElementById("questionText").textContent=currentReading.question;
+ document.getElementById("questionFeedback").textContent="";
+}
+function toggleGerman(){document.getElementById("germanText").classList.toggle("hidden");}
+function saveTextWords(){
+ currentReading.words.forEach(w=>addWord(w[0],w[1],"","Reading"));
+ alert("Text vocabulary saved.");
+}
+function saveReadingTranslation(){
+ const value=document.getElementById("myTranslation").value.trim();
+ if(!value)return;
+ data.texts.push({title:currentReading.title,translation:value,date:todayKey()});
+ save();alert("Your translation has been saved.");
+}
+function checkReadingAnswer(){
+ const value=document.getElementById("questionAnswer").value.toLowerCase().trim();
+ const expected=currentReading.answer.toLowerCase();
+ const keywords=expected.split(/\s+/).filter(x=>x.length>3);
+ const matches=keywords.filter(k=>value.includes(k)).length;
+ document.getElementById("questionFeedback").textContent=matches>=Math.min(2,keywords.length)?"Good answer. Check the text for details.":"Try again and look for the key information in the text.";
+}
+function speakText(text){
+ if(!("speechSynthesis" in window)){alert("Speech synthesis is not supported in this browser.");return;}
+ speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-GB";
+ utterance.rate=Number(document.getElementById("speechRate")?.value||.9);
+ speechSynthesis.speak(utterance);
+}
+function startSpeechRecognition(){
+ const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!Recognition){alert("Speech recognition is not supported in this browser. Try a compatible browser.");return;}
+ const recognition=new Recognition();
+ recognition.lang="en-GB";recognition.interimResults=false;
+ document.getElementById("speechResult").textContent="Listening...";
+ recognition.onresult=e=>{
+  const spoken=e.results[0][0].transcript;
+  const target=document.getElementById("speakInput").value.trim();
+  document.getElementById("speechResult").innerHTML=`<strong>You said:</strong><p>${escapeHTML(spoken)}</p><strong>Practice sentence:</strong><p>${escapeHTML(target)}</p>`;
+ };
+ recognition.onerror=()=>document.getElementById("speechResult").textContent="Speech recognition could not be completed.";
+ recognition.start();
+}
+function showSubtitles(){
+ const text=document.getElementById("subtitleInput").value.trim();
+ if(!text)return;
+ document.getElementById("subtitleOutput").innerHTML=text.split(/\n+/).map(line=>`<div class="word-item"><p>${escapeHTML(line)}</p><button class="small" onclick="speakText('${escapeJS(line)}')">Listen</button><button class="small" onclick="addWord('${escapeJS(line)}','Added from subtitles','','Subtitles')">Save line</button></div>`).join("");
+}
+function showLibraryTab(tab){libraryTab=tab;renderLibrary();}
+function renderLibrary(){
+ const box=document.getElementById("libraryContent");
+ if(libraryTab==="words"){
+  box.innerHTML=data.words.length?data.words.map(w=>wordHTML(w)).join(""):"<p>No saved words.</p>";
+ }else if(libraryTab==="sentences"){
+  box.innerHTML=data.sentences.length?data.sentences.map((s,i)=>`<div class="word-item"><strong>${escapeHTML(s.en)}</strong><p class="translation">${escapeHTML(s.de)}</p><button class="small" onclick="speakText('${escapeJS(s.en)}')">Listen</button><button class="small" onclick="deleteSentence(${i})">Delete</button></div>`).join(""):"<p>No saved sentences.</p>";
+ }else{
+  box.innerHTML=data.texts.length?data.texts.map((t,i)=>`<div class="word-item"><strong>${escapeHTML(t.title)}</strong><p>${escapeHTML(t.translation)}</p><button class="small" onclick="deleteText(${i})">Delete</button></div>`).join(""):"<p>No saved texts.</p>";
+ }
+}
+function deleteSentence(i){if(confirm("Delete sentence?")){data.sentences.splice(i,1);save();renderLibrary();}}
+function deleteText(i){if(confirm("Delete text?")){data.texts.splice(i,1);save();renderLibrary();}}
+function exportData(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="go-on-backup.json";a.click();URL.revokeObjectURL(a.href);
+}
+function importData(event){
+ const file=event.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const imported=JSON.parse(reader.result);
+   if(!imported.words||!Array.isArray(imported.words))throw new Error("Invalid file");
+   data=imported;save();renderLibrary();renderLibraryWords();alert("Backup imported.");
+  }catch(e){alert("This file could not be imported.");}
+ };
+ reader.readAsText(file);
+}
+renderDaily();
+renderPictures();
+renderReading();
+updateHome();
 </script>
-
 </body>
-
 </html>
+>
