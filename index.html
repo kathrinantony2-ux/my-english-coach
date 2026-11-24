@@ -336,3 +336,921 @@ cleanSkipped();renderToday();
 </script>
 </body>
 </html>
+function go(p){
+  page=p;
+  render();
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===p);
+  });
+}
+
+function setLevel(v){
+  data.level=v;
+  save();
+  render();
+}
+
+function header(title,sub=""){
+  return `<h1>${title}</h1>${sub?`<p>${sub}</p>`:""}`;
+}
+
+function btn(label,fn,cls=""){
+  return `<button class="btn ${cls}" onclick="${fn}">${label}</button>`;
+}
+
+function home(){
+  let doneW=data.stats.words%10;
+  let doneS=data.stats.sentences%10;
+
+  return `
+    ${header("Schön, dass du da bist.","Dein Englisch. Dein Tempo. Dein Weg.")}
+    <section class="card">
+      <div class="rings">
+        <div>
+          <div class="ring">${doneW}/10</div>
+          <p>Wörter heute</p>
+        </div>
+        <div>
+          <div class="ring">${doneS}/10</div>
+          <p>Sätze heute</p>
+        </div>
+      </div>
+      <p class="small center">Dein Fortschritt wächst Schritt für Schritt.</p>
+    </section>
+
+    <div class="grid">
+      <button class="tile" onclick="go('learn')">
+        <strong>✎ Wörter & Sätze</strong>
+        <span>Neue Inhalte lernen</span>
+      </button>
+      <button class="tile" onclick="go('read')">
+        <strong>▤ Lesen</strong>
+        <span>Texte und Verständnis</span>
+      </button>
+      <button class="tile" onclick="go('review')">
+        <strong>↻ Wiederholen</strong>
+        <span>Wissen festigen</span>
+      </button>
+      <button class="tile" onclick="go('tests')">
+        <strong>✓ Tests</strong>
+        <span>Grammatik und Übungen</span>
+      </button>
+    </div>
+
+    <section class="card">
+      <h2>Dein Lernstand</h2>
+      <div class="row"><span>Gelernte Wörter</span><strong>${data.stats.words}</strong></div>
+      <div class="row"><span>Gelernte Sätze</span><strong>${data.stats.sentences}</strong></div>
+      <div class="row"><span>Richtige Antworten</span><strong>${data.stats.correct}</strong></div>
+    </section>
+  `;
+}
+
+function learn(){
+  let w=data.words.find(x=>!x.known&&!x.skip)||data.words[0];
+  let s=data.sentences.find(x=>!x.skip)||data.sentences[0];
+
+  if(!w||!s){
+    return `${header("Lernen")}<section class="card">Im Moment sind keine neuen Inhalte vorhanden.</section>`;
+  }
+
+  return `
+    ${header("Lernen","Wähle einen Bereich und lerne in deinem Tempo.")}
+
+    <section class="card">
+      <h2>Wort des Tages</h2>
+      <div class="word">${esc(w.en)}</div>
+      <div class="translation">${esc(w.de)}</div>
+      <p>${esc(w.example||"")}</p>
+      <p>${esc(w.exampleDe||"")}</p>
+      ${btn("🔊 Anhören","speak("+JSON.stringify(w.en)+")")}
+      ${btn("Schon bekannt","knownWord('"+w.id+"')")}
+      ${btn("Merken","mark('word','"+w.id+"')")}
+      ${btn("Überspringen","skip('word','"+w.id+"')","ghost")}
+    </section>
+
+    <section class="card">
+      <h2>Satz des Tages</h2>
+      <div class="translation">${esc(s.en)}</div>
+      <p>${esc(s.de)}</p>
+      ${btn("🔊 Anhören","speak("+JSON.stringify(s.en)+")")}
+      ${btn("Merken","mark('sentence','"+s.id+"')")}
+      ${btn("Weiter","nextSentence()","ghost")}
+    </section>
+
+    <section class="card">
+      <h2>Eigenes Wort speichern</h2>
+      <label>Englisches Wort</label>
+      <input id="newEn" placeholder="e.g. peaceful">
+      <label>Deutsche Übersetzung</label>
+      <input id="newDe" placeholder="z. B. friedlich">
+      <label>Beispielsatz (optional)</label>
+      <input id="newEx" placeholder="A peaceful place...">
+      ${btn("Wort speichern","addWord()","primary")}
+    </section>
+  `;
+}
+
+function readPage(){
+  return `
+    ${header("Lesen & Verstehen","Themen bleiben gleich – das Sprachniveau kannst du oben ändern.")}
+
+    <div class="row">
+      <select id="topic" onchange="renderTexts()">
+        <option>Alle Themen</option>
+        <option>India</option>
+        <option>Conscious breathing</option>
+      </select>
+
+      <select id="textLevel" onchange="renderTexts()">
+        <option value="all">Alle Niveaus</option>
+        <option value="A2">A2</option>
+        <option value="B1">B1</option>
+      </select>
+    </div>
+
+    <div id="textsList">${textCards()}</div>
+  `;
+}
+
+function textCards(){
+  let topic=document.getElementById("topic")?.value||"Alle Themen";
+  let level=document.getElementById("textLevel")?.value||"all";
+
+  return texts
+    .map((t,i)=>({t,i}))
+    .filter(x=>topic==="Alle Themen"||x.t.topic===topic)
+    .filter(x=>level==="all"||x.t.level===level)
+    .map(({t,i})=>`
+      <section class="card">
+        <span class="pill">${esc(t.topic)} · ${esc(t.level)}</span>
+        <h2>${esc(t.title)}</h2>
+        <p>${esc(t.body.slice(0,115))}…</p>
+        ${btn("Text öffnen","openText("+i+")","primary")}
+      </section>
+    `).join("");
+}
+
+function renderTexts(){
+  let list=document.getElementById("textsList");
+  if(list)list.innerHTML=textCards();
+}
+
+function openText(i){
+  currentText=i;
+  let t=texts[i];
+
+  document.getElementById("app").innerHTML=`
+    ${header(t.title,t.topic+" · "+t.level)}
+
+    <section class="card">
+      <p style="color:var(--text);font-size:17px">${esc(t.body)}</p>
+
+      ${btn("🔊 Text anhören","speak("+JSON.stringify(t.body)+")")}
+      ${btn("Deutsche Übersetzung anzeigen","toggleTranslation()","ghost")}
+
+      <p id="translation" class="hidden">${esc(t.de)}</p>
+
+      <hr>
+      <h2>Verständnisfrage</h2>
+      <p>What is the main idea of this text?</p>
+
+      <button class="btn answer" onclick="feedback(this,true)">
+        It describes different aspects of the topic.
+      </button>
+
+      <button class="btn answer" onclick="feedback(this,false)">
+        It gives exact travel prices.
+      </button>
+
+      <p id="feedback"></p>
+    </section>
+
+    ${btn("Zurück zu den Texten","go('read')","ghost")}
+  `;
+}
+
+function review(){
+  let due=data.words
+    .filter(w=>!w.skip&&!w.known)
+    .concat(data.sentences.filter(s=>!s.skip));
+
+  if(!due.length){
+    return `${header("Wiederholen")}<section class="card">Noch keine Inhalte vorhanden.</section>`;
+  }
+
+  return `
+    ${header("Wiederholen","Trainiere Wörter und Sätze aus deiner Bibliothek.")}
+
+    <section class="card">
+      <p>${due.length} Inhalte stehen bereit.</p>
+      ${btn("Gemischte Runde starten","startReview()","primary")}
+      ${btn("Nur Wörter","startReview('word')")}
+      ${btn("Nur Sätze","startReview('sentence')")}
+    </section>
+
+    <section class="card">
+      <h2>Deine Wiederholungsregel</h2>
+      <p>Richtige Antworten wandern in eine längere Wiederholungspause. Falsche Antworten kommen schneller zurück.</p>
+    </section>
+  `;
+}
+
+function library(){
+  return `
+    ${header("Bibliothek","Deine gespeicherten Lerninhalte.")}
+
+    <div class="grid">
+      <button class="tile" onclick="showLib('words')">
+        <strong>Wörter</strong>
+        <span>${data.words.length} Einträge</span>
+      </button>
+
+      <button class="tile" onclick="showLib('sentences')">
+        <strong>Sätze</strong>
+        <span>${data.sentences.length} Einträge</span>
+      </button>
+
+      <button class="tile" onclick="showLib('marked')">
+        <strong>★ Markiert</strong>
+        <span>Favoriten</span>
+      </button>
+
+      <button class="tile" onclick="showLib('skipped')">
+        <strong>Skip it</strong>
+        <span>Übersprungene Inhalte</span>
+      </button>
+    </div>
+
+    <section class="card" id="libContent">
+      <h2>Deine Sammlung</h2>
+      <p>Wähle oben eine Sammlung aus.</p>
+    </section>
+  `;
+}
+
+function showLib(type){
+  let arr=[];
+
+  if(type==="words"){
+    arr=data.words;
+  }else if(type==="sentences"){
+    arr=data.sentences;
+  }else if(type==="marked"){
+    arr=data.words.filter(x=>x.marked)
+      .concat(data.sentences.filter(x=>x.marked));
+  }else{
+    arr=data.words.filter(x=>x.skip)
+      .concat(data.sentences.filter(x=>x.skip));
+  }
+
+  let html=arr.length
+    ?arr.map(x=>`
+      <div class="item">
+        <strong>${esc(x.en)}</strong>
+        <p>${esc(x.de)}</p>
+        <div>
+          ${x.marked?"★ markiert":""}
+          ${x.skip?"· übersprungen":""}
+        </div>
+        ${btn("🔊","speak("+JSON.stringify(x.en)+")","ghost")}
+        ${btn(x.skip?"Wiederherstellen":"Merken","restoreItem('"+x.id+"')")}
+        ${btn("Löschen","deleteItem('"+x.id+"')","danger")}
+      </div>
+    `).join("")
+    :"<p>Hier ist noch nichts gespeichert.</p>";
+
+  let content=document.getElementById("libContent");
+  if(content)content.innerHTML=`<h2>${type}</h2>${html}`;
+}
+
+function more(){
+  return `
+    ${header("Mehr","Weitere Möglichkeiten für dein Englischtraining.")}
+
+    <div class="grid">
+      <button class="tile" onclick="go('tests')">
+        <strong>✓ Tests & Grammatik</strong>
+        <span>Üben und überprüfen</span>
+      </button>
+
+      <button class="tile" onclick="go('speak')">
+        <strong>🎙 Sprechen</strong>
+        <span>Aussprache trainieren</span>
+      </button>
+
+      <button class="tile" onclick="go('listen')">
+        <strong>♫ Hören</strong>
+        <span>Text anhören</span>
+      </button>
+
+      <button class="tile" onclick="go('pictures')">
+        <strong>💥 Bilder</strong>
+        <span>Wortschatz mit Bildern</span>
+      </button>
+
+      <button class="tile" onclick="go('writing')">
+        <strong>✍ Schreiben</strong>
+        <span>Eigene Sätze verfassen</span>
+      </button>
+
+      <button class="tile" onclick="go('subtitle')">
+        <strong>▣ Untertitel</strong>
+        <span>Mit Videos üben</span>
+      </button>
+
+      <button class="tile" onclick="go('settings')">
+        <strong>⚙ Einstellungen</strong>
+        <span>Stimme, Daten, Backup</span>
+      </button>
+    </div>
+  `;
+}
+function tests(){
+  return `
+    ${header("Tests & Grammatik","Kurze Übungen für zwischendurch.")}
+
+    <section class="card">
+      <h2>Grammatik</h2>
+      ${btn("Grammatik-Quiz starten","startGrammar()","primary")}
+    </section>
+
+    <section class="card">
+      <h2>Übersetzen</h2>
+      <label>Englischen Satz eingeben</label>
+      <textarea id="transInput" placeholder="Write a sentence in English..."></textarea>
+      ${btn("Übersetzung anzeigen","translateText()")}
+      <p id="transResult"></p>
+    </section>
+  `;
+}
+
+function speak(text){
+  if(!("speechSynthesis" in window)){
+    alert("Sprachausgabe wird von diesem Browser nicht unterstützt.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  let u=new SpeechSynthesisUtterance(text);
+  u.lang=data.settings.voice;
+  u.rate=Number(data.settings.rate)||0.9;
+  speechSynthesis.speak(u);
+}
+
+function speakPage(){
+  return `
+    ${header("Sprechen","Sprich einen englischen Satz laut aus.")}
+
+    <section class="card">
+      <h2>Übungssatz</h2>
+      <p class="translation">Small steps can lead to meaningful changes.</p>
+
+      ${btn("🔊 Vorlesen","speak('Small steps can lead to meaningful changes.')","primary")}
+
+      <p id="speechStatus">Die Spracherkennung hängt vom Browser ab.</p>
+      ${btn("🎙 Aufnahme starten","recognize()")}
+    </section>
+  `;
+}
+
+function listenPage(){
+  return `
+    ${header("Hören","Höre dir englische Sätze oder Texte an.")}
+
+    <section class="card">
+      <h2>Listening</h2>
+
+      <textarea id="listenText">India is a diverse country with many languages and traditions.</textarea>
+
+      ${btn("▶ Anhören","speak(document.getElementById('listenText').value)","primary")}
+    </section>
+  `;
+}
+
+function picturePage(){
+  return `
+    ${header("Bilder","Wortschatz im Pop-Art-Comic-Stil.")}
+
+    <div class="grid">
+      ${pictures.map(x=>`
+        <div class="card center">
+          <div class="comic" style="font-size:44px">${x[0]}</div>
+          <h3>${esc(x[1])}</h3>
+          <p>${esc(x[2])}</p>
+          ${btn("🔊","speak("+JSON.stringify(x[1])+")")}
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function writingPage(){
+  return `
+    ${header("Schreiben","Schreibe frei oder nutze einen kleinen Impuls.")}
+
+    <section class="card">
+      <p class="gold">Writing prompt</p>
+      <p>Describe a place where you feel peaceful.</p>
+
+      <textarea id="writingText" placeholder="Write your text here..."></textarea>
+
+      ${btn("Text lokal speichern","saveWriting()","primary")}
+      <p id="writingStatus"></p>
+    </section>
+  `;
+}
+
+function subtitlePage(){
+  return `
+    ${header("Untertitel-Training","Füge einen kurzen Untertiteltext ein und übe damit.")}
+
+    <section class="card">
+      <label>Übungsmodus</label>
+
+      <select id="subtitleMode">
+        <option>Deutsches Video + englische Untertitel</option>
+        <option>Englisches Video + deutsche Untertitel</option>
+        <option>Englisches Video + englische Untertitel</option>
+      </select>
+
+      <label>Untertitel einfügen</label>
+      <textarea id="subtitleText" placeholder="Paste subtitles here..."></textarea>
+
+      ${btn("Anhören","speak(document.getElementById('subtitleText').value)")}
+      ${btn("Übersetzung versuchen","translateText('subtitleText','subtitleResult')")}
+
+      <p id="subtitleResult"></p>
+    </section>
+  `;
+}
+
+function settingsPage(){
+  return `
+    ${header("Einstellungen","Passe dein Lernerlebnis an.")}
+
+    <section class="card">
+      <label>Englische Stimme</label>
+
+      <select id="voiceSetting" onchange="data.settings.voice=this.value;save()">
+        <option value="en-GB" ${data.settings.voice==="en-GB"?"selected":""}>British English</option>
+        <option value="en-US" ${data.settings.voice==="en-US"?"selected":""}>American English</option>
+      </select>
+
+      <label>Sprechgeschwindigkeit</label>
+
+      <input
+        type="range"
+        min=".65"
+        max="1.2"
+        step=".05"
+        value="${data.settings.rate}"
+        oninput="data.settings.rate=this.value;save()"
+      >
+
+      <label>
+        <input
+          type="checkbox"
+          style="width:auto"
+          ${data.settings.auto?"checked":""}
+          onchange="data.settings.auto=this.checked;save()"
+        >
+        Automatisch zur nächsten Übung
+      </label>
+
+      <hr>
+
+      <h2>Datensicherung</h2>
+      <p>Exportiere deine Daten regelmäßig, damit du eine Sicherung hast.</p>
+
+      ${btn("Backup herunterladen","backup()","primary")}
+
+      <label>Backup wiederherstellen</label>
+      <input type="file" accept="application/json" onchange="restoreBackup(event)">
+
+      <hr>
+
+      ${btn("Alle App-Daten zurücksetzen","resetData()","danger")}
+    </section>
+  `;
+}
+
+function render(){
+  document.getElementById("levelTop").value=data.level;
+
+  let views={
+    home,
+    learn,
+    read:readPage,
+    review,
+    library,
+    more,
+    tests,
+    speak:speakPage,
+    listen:listenPage,
+    pictures:picturePage,
+    writing:writingPage,
+    subtitle:subtitlePage,
+    settings:settingsPage
+  };
+
+  document.getElementById("app").innerHTML=(views[page]||home)();
+
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
+}
+
+function mark(type,id){
+  let arr=type==="word"?data.words:data.sentences;
+  let x=arr.find(a=>a.id===id);
+
+  if(x)x.marked=!x.marked;
+
+  save();
+  render();
+}
+
+function skip(type,id){
+  let arr=type==="word"?data.words:data.sentences;
+  let x=arr.find(a=>a.id===id);
+
+  if(x){
+    x.skip=true;
+    x.skippedAt=Date.now();
+  }
+
+  save();
+  render();
+}
+
+function knownWord(id){
+  let x=data.words.find(a=>a.id===id);
+
+  if(x&&!x.known){
+    x.known=true;
+    data.stats.words++;
+  }
+
+  save();
+  render();
+}
+
+function nextSentence(){
+  if(data.sentences.length>1){
+    let x=data.sentences.shift();
+    data.sentences.push(x);
+    data.stats.sentences++;
+  }
+
+  save();
+  render();
+}
+
+function addWord(){
+  let en=document.getElementById("newEn").value.trim();
+  let de=document.getElementById("newDe").value.trim();
+  let ex=document.getElementById("newEx").value.trim();
+
+  if(!en||!de){
+    alert("Bitte englisches Wort und deutsche Übersetzung eingeben.");
+    return;
+  }
+
+  data.words.push({
+    id:"w"+Date.now(),
+    en,
+    de,
+    example:ex,
+    exampleDe:"",
+    marked:false,
+    skip:false,
+    known:false,
+    box:0,
+    due:0
+  });
+
+  save();
+  render();
+}
+
+function deleteItem(id){
+  if(!confirm("Diesen Eintrag wirklich löschen?"))return;
+
+  data.words=data.words.filter(x=>x.id!==id);
+  data.sentences=data.sentences.filter(x=>x.id!==id);
+  data.skipped=data.skipped.filter(x=>x.id!==id);
+
+  save();
+  showLib("words");
+}
+
+function restoreItem(id){
+  [...data.words,...data.sentences].forEach(x=>{
+    if(x.id===id){
+      x.skip=false;
+      x.marked=true;
+    }
+  });
+
+  save();
+  showLib("marked");
+}
+
+function startReview(type){
+  quizList=(
+    type==="word"
+      ?data.words
+      :type==="sentence"
+        ?data.sentences
+        :data.words.concat(data.sentences)
+  )
+  .filter(x=>!x.skip&&!x.known)
+  .sort(()=>Math.random()-.5)
+  .slice(0,10);
+
+  quizIndex=0;
+
+  if(!quizList.length){
+    alert("Keine passenden Einträge gefunden.");
+    return;
+  }
+
+  showReviewQuestion();
+}
+
+function showReviewQuestion(){
+  if(quizIndex>=quizList.length){
+    document.getElementById("app").innerHTML=`
+      ${header("Gut gemacht!")}
+
+      <section class="card">
+        <h2>Runde beendet</h2>
+        <p>Du hast ${quizList.length} Inhalte wiederholt.</p>
+        ${btn("Zurück","go('review')","primary")}
+      </section>
+    `;
+    return;
+  }
+
+  let x=quizList[quizIndex];
+
+  document.getElementById("app").innerHTML=`
+    ${header("Wiederholung",`${quizIndex+1} von ${quizList.length}`)}
+
+    <section class="card center">
+      <div class="word">${esc(x.en)}</div>
+      <p>Wie heißt das auf Deutsch?</p>
+
+      <input id="reviewAnswer" placeholder="Deine Antwort">
+
+      <div>
+        ${btn("Antwort prüfen","checkReview()","primary")}
+      </div>
+
+      <p id="reviewFeedback"></p>
+    </section>
+  `;
+}
+
+function checkReview(){
+  let x=quizList[quizIndex];
+  let v=document.getElementById("reviewAnswer").value.trim().toLowerCase();
+  let ok=v===x.de.toLowerCase();
+
+  data.stats[ok?"correct":"wrong"]++;
+
+  x.box=ok?Math.min((x.box||0)+1,5):0;
+
+  x.due=Date.now()+(
+    ok
+      ?[1,2,4,7,14][Math.max(0,x.box-1)]*86400000
+      :0
+  );
+
+  save();
+
+  document.getElementById("reviewFeedback").innerHTML=
+    (ok
+      ?"<span style='color:var(--green)'>Richtig!</span>"
+      :"<span style='color:var(--red)'>Noch nicht ganz.</span>"
+    )+
+    "<br>Richtige Lösung: "+esc(x.de)+
+    `<br>${btn("Weiter","nextReview()","primary")}`;
+}
+
+function nextReview(){
+  quizIndex++;
+  showReviewQuestion();
+}
+
+let grammarIndex=0;
+let grammarScore=0;
+
+function startGrammar(){
+  grammarIndex=0;
+  grammarScore=0;
+  showGrammar();
+}
+
+function showGrammar(){
+  if(grammarIndex>=grammar.length){
+    document.getElementById("app").innerHTML=`
+      ${header("Quiz beendet")}
+
+      <section class="card">
+        <h2>${grammarScore} von ${grammar.length} richtig</h2>
+        ${btn("Noch einmal","startGrammar()","primary")}
+      </section>
+    `;
+    return;
+  }
+
+  let q=grammar[grammarIndex];
+
+  document.getElementById("app").innerHTML=`
+    ${header("Grammatik",`${grammarIndex+1} von ${grammar.length}`)}
+
+    <section class="card">
+      <h2>${q.q}</h2>
+
+      ${q.a.map((a,i)=>`
+        <button class="btn answer" onclick="answerGrammar(${i})">
+          ${esc(a)}
+        </button>
+      `).join("")}
+
+      <p id="grammarFeedback"></p>
+    </section>
+  `;
+}
+
+function answerGrammar(i){
+  let q=grammar[grammarIndex];
+  let ok=i===q.correct;
+
+  if(ok){
+    grammarScore++;
+    data.stats.correct++;
+  }else{
+    data.stats.wrong++;
+  }
+
+  save();
+
+  document.querySelectorAll(".answer").forEach(b=>{
+    b.disabled=true;
+  });
+
+  document.getElementById("grammarFeedback").innerHTML=
+    (ok?"Richtig! ":"Nicht ganz. ")+
+    esc(q.why)+
+    `<br>${btn("Weiter","grammarNext()","primary")}`;
+}
+
+function grammarNext(){
+  grammarIndex++;
+  showGrammar();
+}
+
+function feedback(el,ok){
+  document.getElementById("feedback").textContent=
+    ok
+      ?"Richtig! Der Text beschreibt verschiedene Aspekte des Themas."
+      :"Nicht ganz. Lies den Text noch einmal.";
+}
+
+function toggleTranslation(){
+  document.getElementById("translation").classList.toggle("hidden");
+}
+
+async function translateText(inputId="transInput",resultId="transResult"){
+  let el=document.getElementById(inputId);
+  let out=document.getElementById(resultId);
+  let q=el?.value.trim();
+
+  if(!q){
+    out.textContent="Bitte zuerst einen Text eingeben.";
+    return;
+  }
+
+  out.textContent="Übersetzung wird geladen …";
+
+  try{
+    let url="https://api.mymemory.translated.net/get?q="+
+      encodeURIComponent(q)+
+      "&langpair=en|de";
+
+    let r=await fetch(url);
+    let j=await r.json();
+
+    out.textContent=
+      j.responseData?.translatedText||
+      "Keine Übersetzung erhalten.";
+  }catch(e){
+    out.textContent="Übersetzung gerade nicht verfügbar. Bitte später erneut versuchen.";
+  }
+}
+
+function recognize(){
+  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+  if(!SR){
+    document.getElementById("speechStatus").textContent=
+      "Spracherkennung wird in diesem Browser nicht unterstützt. Du kannst den Satz trotzdem laut nachsprechen.";
+    return;
+  }
+
+  let r=new SR();
+  r.lang="en-GB";
+
+  r.onresult=e=>{
+    document.getElementById("speechStatus").textContent=
+      "Erkannt: "+e.results[0][0].transcript;
+  };
+
+  r.onerror=()=>{
+    document.getElementById("speechStatus").textContent=
+      "Die Aufnahme konnte nicht ausgewertet werden.";
+  };
+
+  r.start();
+}
+
+function saveWriting(){
+  let v=document.getElementById("writingText").value.trim();
+
+  if(!v){
+    alert("Bitte zuerst etwas schreiben.");
+    return;
+  }
+
+  data.texts.push({
+    date:new Date().toISOString(),
+    text:v
+  });
+
+  save();
+
+  document.getElementById("writingStatus").textContent=
+    "Dein Text wurde auf diesem Gerät gespeichert.";
+}
+
+function backup(){
+  let blob=new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  );
+
+  let url=URL.createObjectURL(blob);
+  let a=document.createElement("a");
+
+  a.href=url;
+  a.download="go-on-backup.json";
+  a.click();
+
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function restoreBackup(e){
+  let f=e.target.files[0];
+  if(!f)return;
+
+  let r=new FileReader();
+
+  r.onload=()=>{
+    try{
+      let d=JSON.parse(r.result);
+
+      if(!d.words||!d.sentences||!d.settings||!d.stats){
+        throw Error();
+      }
+
+      data=d;
+      save();
+
+      alert("Backup wiederhergestellt.");
+      render();
+    }catch(err){
+      alert("Diese Datei sieht nicht wie ein go on Backup aus.");
+    }
+  };
+
+  r.readAsText(f);
+}
+
+function resetData(){
+  if(confirm("Wirklich alle gespeicherten Daten löschen?")){
+    data=fresh();
+    save();
+    go("home");
+  }
+}
+
+// APP STARTEN
+render();
+
+</script>
+</body>
+</html>
